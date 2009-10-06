@@ -1,0 +1,95 @@
+/*
+ * Copyright (C) 2008 David Winter (dawi2332@gmail.com).
+ * All rights reserved.
+ */
+
+/* $Id: system.h 279 2008-12-17 19:53:52Z david $ */
+
+#ifndef _SYSTEM_H
+#define _SYSTEM_H
+
+#include <config.h>
+#include <stdio.h> 
+#if HAVE_SYS_TYPES_H 
+#	include <sys/types.h> 
+#endif  /* HAVE_SYS_TYPES_H */
+#if HAVE_SYS_STAT_H 
+#	include <sys/stat.h> 
+#endif  /* HAVE_SYS_STAT_H */
+#if STDC_HEADERS 
+#	include <stdlib.h> 
+#	include <stddef.h> 
+#	include <stdarg.h>
+#else 
+#	ifdef HAVE_STDLIB_H 
+#	include <stdlib.h> 
+#	endif  /* HAVE_STDLIB_H */
+#endif  /* STDC_HEADERS */
+#if HAVE_STRING_H 
+#	if !defined STDC_HEADERS && defined HAVE_MEMORY_H 
+#		include <memory.h> 
+#	endif  /* !STDC_HEADERS && HAVE_MEMORY_H */
+#	include <string.h> 
+#endif  /* HAVE_STRING_H */
+#if HAVE_STRINGS_H 
+#	include <strings.h> 
+#endif  /* HAVE_STRINGS_H */
+#if HAVE_INTTYPES_H 
+#	include <inttypes.h> 
+#endif /* HAVE_INTTYPES_H */
+#ifdef HAVE_STDINT_H 
+#	include <stdint.h> 
+#endif  /* HAVE_STDINT_H */
+#if HAVE_UNISTD_H 
+#	include <unistd.h> 
+#endif /* HAVE_UNISTD_H */
+#ifdef HAVE_GETOPT_H
+#	include <getopt.h>
+#endif /* HAVE_GETOPT_H */
+#ifdef HAVE_SYS_PARAMS_H
+#	include <sys/params.h>
+#endif /* HAVE_SYS_PARAMS_H */
+#ifdef HAVE_ERRNO_H
+#	include <errno.h>
+#endif
+
+#ifndef MAX_STRING_LEN
+#define MAX_STRING_LEN 256
+#endif
+
+#define strmcpy(a, b) strncpy(a, b, MAX_STRING_LEN)
+#define strmcmp(a, b) strncmp(a, b, MAX_STRING_LEN)
+
+#if !HAVE_DECL_P_TMPDIR
+/* /tmp should be present on all Unices I guess... */
+#define P_tmpdir "/tmp/"
+#endif
+
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE 1
+#endif
+
+#ifndef EXIT_SUCCESS
+#define EXIT_SUCCESS 0
+#endif
+
+#define EXIT_FILEPERM 1
+#define EXIT_SYNTAXERROR 2
+#define EXIT_VERIFICATION 3
+#define EXIT_INTERRUPT 4
+#define EXIT_OVERFLOW 5
+#define EXIT_ILLEGALCHARS 6
+#define EXIT_INVALIDFILE 7
+#define EXIT_ALLOCATION 8
+
+#define RANDOMDEV "/dev/random"
+
+#ifndef errno
+extern int errno;
+#endif
+
+#ifndef exit
+extern void exit();
+#endif
+
+#endif /* !_SYSTEM_H */

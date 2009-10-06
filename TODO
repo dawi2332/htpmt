@@ -1,0 +1,9 @@
+HTPMT TODO
+==========
+David Winter <dawi2332@gmail.com>
+$Id: TODO 278 2008-12-15 09:16:04Z david $
+
+ * conversion tool: plain <--> (sha1|md5|crypt)
+ * autotest/C testsuites for ALL programs
+ * simple man page(s)
+ * small README in / and docs in ./doc/

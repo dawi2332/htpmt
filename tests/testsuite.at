@@ -1,0 +1,4 @@
+AT_INIT()
+
+m4_include([libmd.at])
+m4_include([libhtcore.at])

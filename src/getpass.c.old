@@ -1,0 +1,59 @@
+/*
+ *  getpass.c -- Wrapper/replacement for getpass(3) function.
+ */
+
+#include "system.h"
+#include "error.h"
+
+#if defined(HAVE_TERMIOS_H) && defined(HAVE_TCSETATTR)
+#	include <termios.h>
+#endif /* HAVE_TERMIOS_H && HAVE_TCSETATTR */
+
+#include <signal.h>
+
+char *
+getpass(const char *prompt)
+{
+	sigset_t	sig, osig;
+	struct termios	*t, *ot;
+	static char	buf[MAX_STRING_LEN];
+	FILE		*stream;
+
+/*
+ * TODO: manipulating tty properties does not always work as it is supposed to
+ */
+	printf("%s", ctermid(NULL));
+
+	if ((stream = fopen(ctermid(NULL), "r+")) == NULL)
+	{
+		return NULL;
+	}
+	setbuf(stream, NULL);
+
+	sigemptyset(&sig);
+	sigaddset(&sig, SIGINT);
+	sigaddset(&sig, SIGTSTP);
+	sigprocmask(SIG_BLOCK, &sig, &osig);
+
+	tcgetattr(fileno(stream), t);
+
+	*ot = *t;
+	t->c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL);
+
+	tcsetattr(fileno(stream), TCSAFLUSH, t);
+
+	fputs(prompt, stream);
+	
+	if (fgets(buf, MAX_STRING_LEN-1, stream) == NULL)
+	{
+		return NULL;
+	}
+
+	putc('\n', stream);
+
+	tcsetattr(fileno(stream), TCSAFLUSH, ot);
+	sigprocmask(SIG_SETMASK, &osig, NULL);
+//	fclose(stream);
+
+	return buf;
+}

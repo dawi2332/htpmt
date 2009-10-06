@@ -1,0 +1,9 @@
+#! /bin/sh
+# use the template in $1 to create version_info.h in $2
+
+
+if [[ -d `dirname $1`/.bzr && -x $(which bzr) ]]
+then
+	TEMPLATE=$(cat $1)
+	bzr version-info --custom --template "$TEMPLATE" > $2
+fi

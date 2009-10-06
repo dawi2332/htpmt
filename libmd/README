@@ -1,0 +1,4 @@
+This version of libmd has been obtained from the DragonFly BSD sources, along
+with sys/md5.h.
+Unused MDs have been removed and the code was edited to remove unneccesary
+precompiler instructions and to resolve compiler warnings.

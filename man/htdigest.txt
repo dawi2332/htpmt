@@ -1,0 +1,72 @@
+HTDIGEST(1)
+===========
+:man source: htpmt
+:man manual: htdigest manual
+:man version: {revision}
+:author: David Winter <dawi2332@gmail.com>
+
+NAME
+----
+htdigest - Create and update user authentication files
+
+SYNOPSIS
+--------
+*htdigest* ['OPTIONS'] 'FILE' 'REALM' 'USERNAME'
+
+*htdigest* -n|--to-stdout ['OPTIONS'] 'REALM' 'USERNAME'
+
+*htdigest* -D|--delete 'FILE' 'REALM' 'USERNAME'
+
+DESCRIPTION
+-----------
+*htdigest* can be used to create and update authentification files used by web servers such as Apache httpd, nginx or lighttpd for the HTTP Digest Authentification Scheme.
+
+*htdigest* is designed as a drop-in replacement for the *htdigest* program shipped with Apache httpd and provides a superset of its features.
+
+OPTIONS
+-------
+*-c, --create*::
+    Create file 'FILE'. If 'FILE' exists, overwrite it. Can not be used at the same time as *--to-stdout*.
+
+*-n, --to-stdout*::
+    Write data to standard output instead 'FILE'. Can not be used at the same time as *--create*.
+
+*-D, --delete*::
+    Removes the user record that matches both 'USERNAME' and 'REALM' from the authentification file.
+
+*--from-stdin*::
+    Get password from standard input.
+
+*--no-verify*::
+   Skip password verification.
+
+*--version*::
+   Prints htdigest version information.
+
+*--help*::
+   Prints usage information. 
+
+EXAMPLES
+--------
+----
+# create new file
+htdigest -c passwdfile realm1 user1
+
+# add another user record in realm realm2
+htdigest passwdfile realm2 user2
+
+# modify user record for user1 in realm1
+htpasswd passwdfile realm1 user1
+
+# delete user record for user2 from realm2
+htpasswd -D passwdfile realm2 user2
+
+# in a shell script:
+echo $pass | htdigest --from-stdin $file $realm $user
+----
+
+SEE ALSO
+--------
+
+htpasswd(1)
+

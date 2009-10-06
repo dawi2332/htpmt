@@ -1,0 +1,16 @@
+#! /bin/sh
+# $Id: gprof2dot 277 2008-12-14 00:23:50Z david $
+
+# A script to generate a Graphviz (.dot) file from gprof output.
+# Make sure to add `-pg' to your CFLAGS
+
+if [ $# -lt 2 ]
+then
+	echo "$0: not enough parameters given"
+	echo "usage: gprof2dot a.out FILE"
+	exit 2
+fi
+
+# make sure, floating point values are printed correctly
+LC_ALL="C"
+gprof $1 | python $(dirname $0)/gprof2dot.py -o $2

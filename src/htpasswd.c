@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2008 David Winter (dawi2332@gmail.com). All rights reserved.
+ * Copyright (c) 2008 David Winter (dawi2332@gmail.com)
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,6 +23,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
  * SUCH DAMAGE.
+ *
  */
 
 /* $Id: htpasswd.c 286 2008-12-19 02:04:27Z david $ */
@@ -45,7 +47,6 @@ char* program_name;
 
 void usage(void);
 void version(void);
-int excl(int, int, int, int);
 
 int
 main(int argc, char *argv[])
@@ -286,25 +287,6 @@ version(void)
 {
 	printf("%s - %s %s\n", program_name, PACKAGE_NAME, PACKAGE_VERSION);
 	printf("\
-Copyright (C) 2008 David Winter (dawi2332@gmail.com). All rights reserved.\n");
+Copyright (c) 2008 David Winter (dawi2332@gmail.com).\n");
 	exit(EXIT_SUCCESS);
-}
-
-int
-excl(int a, int b, int c, int d)
-{
-	int i = 0;
-	if (a)
-		i++;
-	if (b)
-		i++;
-	if (c)
-		i++;
-	if (d)
-		i++;
-
-	if (i > 1)
-		return 1;
-	else
-		return 0;
 }

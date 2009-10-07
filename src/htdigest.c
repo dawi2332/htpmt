@@ -205,7 +205,7 @@ Options:\n\n\
   --help                      prints this brief help\n\n\
 REALM is a mandatory parameter for every option but `-D'.\n");
 	printf("\n\
-Bug reports to <%s>.\n", PACKAGE_BUGREPORT);
+Report bugs at http://code.google.com/p/htpmt/\n");
 
 	exit(EXIT_SUCCESS);
 }
@@ -215,6 +215,7 @@ version(void)
 {
 	printf("%s - %s %s\n", program_name, PACKAGE_NAME, PACKAGE_VERSION);
 	printf("\
-Copyright (c) 2008 David Winter (dawi2332@gmail.com).\n");
+Copyright (c) 2008 David Winter (dawi2332@gmail.com). All rights reserved.\n\
+This is open source software, the the source for copying conditions.\n");
 	exit(EXIT_SUCCESS);
 }

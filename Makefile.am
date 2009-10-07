@@ -5,4 +5,4 @@ EXTRA_DIST = TODO BUGS
 
 # Create ChangeLog on the fly during 'make dist'
 dist-hook:
-	test -z `which svn` && test -d ${top_srcdir}/.svn || svn log ${top_srcdir} | ${top_srcdir}/contrib/gnuify-changelog  > ${top_distdir}/ChangeLog
+	test -z `svn info ${abs_srcdir}` || $(srcdir)/build-aux/missing --run svn log ${abs_srcdir} | ${srcdir}/contrib/gnuify-changelog  > ${distdir}/ChangeLog

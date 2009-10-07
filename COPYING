@@ -1,3 +1,11 @@
+The MD5 digest algorithm included is derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm. See libmd5/md5.copyright for the license.
+
+The SHA-1 digest algorithm included was written by Eric Young. See libmd/sha1c.c for the license.
+
+The crypt_apr1 function in src/crypt-apr1.c is based on the crypt_md5 function by Poul-Henning Kamp.
+
+Unless otherwise stated, the rest of the code in this package is distributed under the following terms and conditions:
+
 Copyright (c) 2008 David Winter (dawi2332@gmail.com)
 All rights reserved.
 

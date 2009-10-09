@@ -7,7 +7,22 @@ static char *
 MD5_String(char *string)
 {
 	char buf[33];
-	return MD5Data((unsigned char*) string,strlen(string),buf);
+	char *ptr;
+	unsigned char digest[16];
+	int i;
+
+	MD5_CTX context;
+	MD5Init(&context);
+	MD5Update(&context, string, strlen(string));
+	MD5Final(digest, &context);
+
+	ptr = buf;
+	for (i = 0; i < 16; i++)
+	{
+		sprintf(ptr, "%02x", digest[i]);
+		ptr += 2;
+	}
+	return buf;
 }
 
 

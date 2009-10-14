@@ -214,8 +214,14 @@ password will be visible on the command line and in the process table.\n");
 		password = getpass("Password:");
 		if (flags.verify)
 		{
-			strmcpy(buf, getpass("Verify password:"));
-			if (strmcmp(password, buf) != 0)
+			/*
+			 * copy the password into a buffer and then zero it,
+			 * so we don't overwrite it with the verification
+			 */
+			strncpy(buf, password, MAX_STRING_LEN);
+			memset(password, 0, MAX_STRING_LEN);
+		       	password = getpass("Verify password:");
+			if (strncmp(password, buf, MAX_STRING_LEN) != 0)
 			{
 				memset(buf, 0, MAX_STRING_LEN);
 				error(EXIT_VERIFICATION, "password mismatch");
@@ -229,7 +235,7 @@ password will be visible on the command line and in the process table.\n");
 	}
 
 	if (strlen(password) > MAX_STRING_LEN-1)
-		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN);
+		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
 
 	if (flags.force_plain)
 		secret = password;

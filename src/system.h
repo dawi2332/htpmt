@@ -78,9 +78,6 @@
 
 #define MAX_STRING_LEN 256
 
-#define strmcpy(a, b) strncpy(a, b, MAX_STRING_LEN)
-#define strmcmp(a, b) strncmp(a, b, MAX_STRING_LEN)
-
 #if !HAVE_DECL_P_TMPDIR
 /* /tmp should be present on all Unices I guess... */
 #define P_tmpdir "/tmp/"

@@ -154,8 +154,14 @@ the username must not contain the character ':'");
 		password = getpass("Password:");
 		if (flags.verify)
 		{
-			strmcpy(buf, getpass("Verify password:"));
-			if (strmcmp(password, buf) != 0)
+			/*
+			 * copy the password into a buffer and then zero it,
+			 * so we don't overwrite it with the verification
+			 */
+			strncpy(buf, password, MAX_STRING_LEN);
+			memset(password, 0, MAX_STRING_LEN);
+		       	password = getpass("Verify password:");
+			if (strncmp(password, buf, MAX_STRING_LEN) != 0)
 			{
 				memset(buf, 0, MAX_STRING_LEN);
 				error(EXIT_VERIFICATION, "password mismatch");
@@ -170,7 +176,7 @@ the username must not contain the character ':'");
 	}
 
 	if (strlen(password) > MAX_STRING_LEN-1)
-		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN);
+		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
 
 	secret = digest_md5(username, realm, password, NULL);
 

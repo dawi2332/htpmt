@@ -21,7 +21,3 @@ AUTOTEST = $(AUTOM4TE) --language=autotest
 $(TESTSUITE): $(srcdir)/testsuite.at $(srcdir)/package.m4 $(srcdir)/libmd.at
 	$(AUTOTEST) -I '$(srcdir)' -o $@.tmp $@.at 
 	mv $@.tmp $@ 
-
-
-.PHONY: libmd.at
-libmd.at: $(top_builddir)/libmd/libmd.a

@@ -1,6 +1,7 @@
-MAINTAINERCLEANFILES = Makefile.in htpasswd.1 htpasswd.xml htdigest.1 htdigest.xml
+MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = htpasswd.txt htpasswd.1 htdigest.txt htdigest.1
-CLEANFILES = htpasswd.1.xml htdigest.1.xml
+DISTCLEANFILES = htpasswd.1 htdigest.1
+CLEANFILES = htpasswd.xml htdigest.xml
 
 man1_MANS = htpasswd.1 htdigest.1
 

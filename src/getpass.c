@@ -53,7 +53,7 @@ getpass(const char *prompt)
 	int				c;
 
 	if ((fp = fopen(ctermid(NULL), "r+")) == NULL)
-		return NULL;
+		error(EXIT_INVALIDFILE, "can't read from terminal");
 	setbuf(fp, NULL);
 
 	sigemptyset(&sig);
@@ -67,10 +67,21 @@ getpass(const char *prompt)
 	tcsetattr(fileno(fp), TCSAFLUSH, &ts);
 	fputs(prompt, fp);
 
-	fgets(buf, MAX_STRING_LEN, fp);
-	ptr = strchr(buf, '\n');
-	*ptr = '\0';
-	putc('\n', fp);
+	if (fgets(buf, MAX_STRING_LEN, fp) != NULL)
+	{
+		ptr = strchr(buf, '\n');
+		if (ptr != NULL)
+			*ptr = '\0';
+		putc('\n', fp);
+	}
+	if (feof(fp))
+	{
+		error(EXIT_OVERFLOW, "reached EOF before first character");
+	}
+	if (ferror(fp))
+	{
+		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN);
+	}
 
 	tcsetattr(fileno(fp), TCSAFLUSH, &ots);
 	sigprocmask(SIG_SETMASK, &osig, NULL);

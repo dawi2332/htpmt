@@ -76,9 +76,7 @@
 #	include <errno.h>
 #endif
 
-#ifndef MAX_STRING_LEN
 #define MAX_STRING_LEN 256
-#endif
 
 #define strmcpy(a, b) strncpy(a, b, MAX_STRING_LEN)
 #define strmcmp(a, b) strncmp(a, b, MAX_STRING_LEN)

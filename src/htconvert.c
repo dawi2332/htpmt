@@ -35,10 +35,6 @@ char *program_name;
 #include "digest-auth.h"
 #include "basic-auth.h"
 
-#ifndef PROGRAM_NAME
-#define PROGRAM_NAME "htconvert"
-#endif
-
 typedef char* (*encrypt_t) (char*, char*, char*, char*);
 
 void usage(void);

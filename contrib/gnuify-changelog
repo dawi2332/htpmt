@@ -13,7 +13,7 @@ require 5.0;
 use strict;
 
 my %hackers = (
-	'david' => "David Winter <dawi2332\@gmail.com>"
+	'dawi2332' => "David Winter <dawi2332\@gmail.com>"
 );
 
 my $parse_next_line = 0;

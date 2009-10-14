@@ -35,10 +35,6 @@ char* program_name;
 #include "digest-auth.h"
 #include "fileio.h"
 
-#ifndef PROGRAM_NAME
-#define PROGRAM_NAME "htdigest"
-#endif
-
 void usage(void);
 void version(void);
 

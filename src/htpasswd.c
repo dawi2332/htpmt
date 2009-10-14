@@ -41,10 +41,6 @@ char* program_name;
 #define _WARN 0
 #endif /* !_WARN */
 
-#ifndef PROGRAM_NAME
-#define PROGRAM_NAME "htpasswd"
-#endif
-
 void usage(void);
 void version(void);
 

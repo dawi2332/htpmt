@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: xalloc.h 277 2008-12-14 00:23:50Z david $ */
+/* $Id$ */
 
 #ifndef _XALLOC_H
 #define _XALLOC_H

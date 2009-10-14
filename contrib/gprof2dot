@@ -1,5 +1,5 @@
 #! /bin/sh
-# $Id: gprof2dot 277 2008-12-14 00:23:50Z david $
+# $Id$
 
 # A script to generate a Graphviz (.dot) file from gprof output.
 # Make sure to add `-pg' to your CFLAGS

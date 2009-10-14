@@ -26,7 +26,7 @@
  *
  */
  
-/* $Id: basic-auth.h 278 2008-12-15 09:16:04Z david $ */
+/* $Id$ */
 
 #ifndef _BASIC_AUTH_H
 #define _BASIC_AUTH_H 1

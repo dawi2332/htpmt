@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: getpass.h 278 2008-12-15 09:16:04Z david $ */
+/* $Id$ */
 
 #ifndef _GETPASS_H
 #define _GETPASS_H

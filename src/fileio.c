@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: fileio.c 289 2008-12-24 00:32:17Z david $ */
+/* $Id$ */
 
 #include <fcntl.h>
 #include "fileio.h"

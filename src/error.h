@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: error.h 280 2008-12-17 19:57:09Z david $ */
+/* $Id$ */
 
 #ifndef _ERROR_H
 #define _ERROR_H

@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: error.c 280 2008-12-17 19:57:09Z david $ */
+/* $Id$ */
 
 #include <system.h>
 #ifndef program_name

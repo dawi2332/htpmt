@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: getpass.c 277 2008-12-14 00:23:50Z david $ */
+/* $Id$ */
 
 /*
  * getpass.c -- Wrapper/replacement for getpass(3) function.

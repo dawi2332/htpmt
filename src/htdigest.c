@@ -48,7 +48,9 @@ main(int argc, char *argv[])
 	char *username;
 	char *password;
 	char *realm;
+	char *ptr;
 	char buf[MAX_STRING_LEN];
+	char buf1[MAX_STRING_LEN];
 	char c;
 
 	static struct
@@ -167,12 +169,23 @@ the username must not contain the character ':'");
 
 	if (flags.from_stdin)
 	{
-		scanf("%s", buf);
-		password = buf;
+		if (fgets(buf1, MAX_STRING_LEN+1, stdin) != NULL)
+		{
+			if ((ptr = strchr(buf1, '\n')) != NULL)
+				*ptr = '\0';
+
+			if (buf1[MAX_STRING_LEN] != '\0')
+				error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
+		}
+		else
+			error(EXIT_INVALIDFILE, "error while reading from stdin");
 	}
 
 	if (strlen(password) > MAX_STRING_LEN-1)
 		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
+
+	if (strlen(realm) > MAX_STRING_LEN-1)
+		error(EXIT_OVERFLOW, "the realm must not contain more than %i characters", MAX_STRING_LEN-1);
 
 	secret = digest_md5(username, realm, password, NULL);
 

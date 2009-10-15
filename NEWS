@@ -1,5 +1,15 @@
 HTPMT NEWS
 ==========
 
+Version 1.0.1
+ * Too many or no characters entered at the password prompt or when reading the
+   password from stdin no longer causes a segmentation fault.
+ * Fixed password verification. getpass return buffer is now duplicated and
+   then filled with zeroes so that the password and its verification now in
+   fact are placed in different buffers.
+ * Additional checks for string length of password, usernames and realms have
+   been added in order to avoid buffer overflows.
+ * The dist-hook prevented `make dist` to work properly, this has been fixed.
+ * version() output has been corrected.
 Version 1.0
  * Initial Release

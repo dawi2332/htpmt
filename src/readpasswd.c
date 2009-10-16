@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 David Winter (dawi2332@gmail.com)
+ * Copyright (c) 2009 David Winter (dawi2332@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,13 +28,8 @@
 
 /* $Id$ */
 
-/*
- * getpass.c -- Wrapper/replacement for getpass(3) function.
- */
-
-#include "system.h"
-#include "error.h"
-
+#include <system.h>
+#include "readpasswd.h"
 #ifdef HAVE_SIGNAL_H
 #include	<signal.h>
 #endif /* HAVE_SIGNAL_H */
@@ -42,63 +37,69 @@
 #include	<termios.h>
 #endif /* HAVE_TERMIOS_H */
 
+/*
+ * readpasswd -- reads bufsize-1 chars from stdin or tty
+ */
 char *
-getpass(const char *prompt)
+readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
 {
-	/*
-	 * an extra byte is needed because fgets won't report >= MAX_STRING_LEN
-	 * chars, now we can check ourselves
-	 */
-	static char		buf[MAX_STRING_LEN+1];
-	char			*ptr;
-	sigset_t		sig, osig;
-	struct termios		ts, ots;
-	FILE			*fp;
-	int			c;
+	size_t		len;
+	char		*ptr;
+	sigset_t	sig, osig;
+	struct termios	ts, ots;
+	FILE		*fp;
+	char		c;
 
-	if ((fp = fopen(ctermid(NULL), "r+")) == NULL)
-		error(EXIT_FILEPERM, "can't read from terminal");
-	setbuf(fp, NULL);
+	memset(buffer, 0, sizeof(buffer));
 
-	sigemptyset(&sig);
-	sigaddset(&sig, SIGINT);
-	sigaddset(&sig, SIGTSTP);
-	sigprocmask(SIG_BLOCK, &sig, &osig);
-
-	tcgetattr(fileno(fp), &ots);
-	tcgetattr(fileno(fp), &ts);
-	ts.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL | ICANON);
-	tcsetattr(fileno(fp), TCSAFLUSH, &ts);
-	fputs(prompt, fp);
-
-	if (fgets(buf, MAX_STRING_LEN+1, fp) != NULL)
+	if (flags & F_TTY)
 	{
-		if ((ptr = strchr(buf, '\n')) != NULL)
-			*ptr = '\0';
-		putc('\n', fp);
+		if ((fp = fopen(ctermid(NULL), "r+")) == NULL)
+			error(EXIT_FILEPERM, "can't open terminal for reading");
+		setbuf(fp, NULL);
 
-		if (buf[MAX_STRING_LEN] != '\0')
-			error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
+		sigemptyset(&sig);
+		sigaddset(&sig, SIGINT);
+		sigaddset(&sig, SIGTSTP);
+		sigprocmask(SIG_BLOCK, &sig, &osig);
+
+		if (flags & F_NOECHO)
+		{
+			tcgetattr(fileno(fp), &ots);
+			tcgetattr(fileno(fp), &ts);
+			ts.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL | ICANON);
+			tcsetattr(fileno(fp), TCSAFLUSH, &ts);
+		}
+
+		if (prompt != NULL && strlen(prompt) > 0)
+			fputs(prompt, fp);
 	}
 	else
+		fp = stdin;
+
+	len = 0;
+	while (((c = fgetc(fp)) != EOF) && (c != '\n'))
 	{
-		putc('\n', fp);
+		buffer[len] = c;
 
-		/* check for EOF and errors */
-		if (feof(fp))
+		if (++len >= bufsize)
 		{
-			error(EXIT_INVALIDFILE, "reached EOF before first character");
-		}
-
-		if (ferror(fp))
-		{
-			error(EXIT_INVALIDFILE, "error while reading from terminal");
+			break;
 		}
 	}
+	buffer[len] = '\0';
 
+	if (flags & F_TTY)
+	{
+		fputc('\n', fp);
+		if (flags & F_NOECHO)
+			tcsetattr(fileno(fp), TCSAFLUSH, &ots);
+		sigprocmask(SIG_SETMASK, &osig, NULL);
+		fclose(fp);
+	}
 
-	tcsetattr(fileno(fp), TCSAFLUSH, &ots);
-	sigprocmask(SIG_SETMASK, &osig, NULL);
-	fclose(fp);
-	return(buf);
+	if (len >= bufsize)
+		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", bufsize-1);
+
+	return buffer;
 }

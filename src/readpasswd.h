@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 David Winter (dawi2332@gmail.com)
+ * Copyright (c) 2009 David Winter (dawi2332@gmail.com)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,10 @@
 
 /* $Id$ */
 
-#ifndef _GETPASS_H
-#define _GETPASS_H
-char *getpass(const char*);
+#define F_TTY 0x1
+#define F_NOECHO 0x2
+
+#ifndef _READPASSWD_H
+#define _READPASSWD_H
+char *readpasswd(const char *, char *, size_t, int);
 #endif

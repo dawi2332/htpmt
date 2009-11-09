@@ -93,9 +93,7 @@ update_file(char *filename, char *username, char *realm, char *password)
 		column2 = strtok(NULL, ":");
 		column3 = strtok(NULL, ":");
 
-		if (strncmp(username, column1, MAX_STRING_LEN) == 0 &&
-			(realm != NULL &&
-			 strncmp(realm, column2, MAX_STRING_LEN) == 0))
+		if (strncmp(username, column1, MAX_STRING_LEN) == 0 && (realm == NULL || (strncmp(realm, column2, MAX_STRING_LEN) == 0)))
 		{
 			if (password != NULL)
 			{

@@ -28,8 +28,7 @@
 
 /* $Id$ */
 
-#define F_TTY 0x1
-#define F_NOECHO 0x2
+#define F_NOECHO 0x1
 
 #ifndef _READPASSWD_H
 #define _READPASSWD_H

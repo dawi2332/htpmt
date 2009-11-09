@@ -37,6 +37,40 @@
 #include	<termios.h>
 #endif /* HAVE_TERMIOS_H */
 
+struct termios	oattr;
+sigset_t	oset;
+
+/*
+ * setup_terminal -- masks interrupts and changes terminal attributes
+ */
+void
+setup_terminal(void)
+{
+	struct termios	attr;
+	sigset_t	set;
+
+	sigemptyset(&set);
+	sigaddset(&set, SIGINT);
+	sigaddset(&set, SIGTSTP);
+	sigprocmask(SIG_BLOCK, &set, &oset);
+
+	tcgetattr(STDIN_FILENO, &attr);
+	tcgetattr(STDIN_FILENO, &oattr);
+	attr.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL | ICANON);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &attr);
+}
+
+/*
+ * reset_terminal -- resets interrupts and terminal attributes to whatever
+ *                   it was before calling setup_terminal
+ */
+void
+reset_terminal(void)
+{
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &oattr);
+	sigprocmask(SIG_SETMASK, &oset, NULL);
+}
+
 /*
  * readpasswd -- reads bufsize-1 chars from stdin or tty
  */
@@ -45,40 +79,27 @@ readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
 {
 	size_t		len;
 	char		*ptr;
-	sigset_t	sig, osig;
-	struct termios	ts, ots;
-	FILE		*fp;
 	char		c;
+	int		has_prompt;
 
+	has_prompt = ((prompt != NULL) && (strlen(prompt) > 0) ? 1 : 0);
 	memset(buffer, 0, sizeof(buffer));
 
-	if (flags & F_TTY)
+	if (isatty(STDIN_FILENO))
 	{
-		if ((fp = fopen(ctermid(NULL), "r+")) == NULL)
-			error(EXIT_FILEPERM, "can't open terminal for reading");
-		setbuf(fp, NULL);
-
-		sigemptyset(&sig);
-		sigaddset(&sig, SIGINT);
-		sigaddset(&sig, SIGTSTP);
-		sigprocmask(SIG_BLOCK, &sig, &osig);
-
 		if (flags & F_NOECHO)
 		{
-			tcgetattr(fileno(fp), &ots);
-			tcgetattr(fileno(fp), &ts);
-			ts.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL | ICANON);
-			tcsetattr(fileno(fp), TCSAFLUSH, &ts);
+			setup_terminal();
+			atexit(reset_terminal);
 		}
 
-		if (prompt != NULL && strlen(prompt) > 0)
-			fputs(prompt, fp);
 	}
-	else
-		fp = stdin;
+
+	if (has_prompt)
+		fputs(prompt, stdout);
 
 	len = 0;
-	while (((c = fgetc(fp)) != EOF) && (c != '\n'))
+	while (((c = getchar()) != EOF) && (c != '\n'))
 	{
 		buffer[len] = c;
 
@@ -89,13 +110,13 @@ readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
 	}
 	buffer[len] = '\0';
 
-	if (flags & F_TTY)
+	if (has_prompt)
+		putchar('\n');
+
+	if (isatty(STDIN_FILENO))
 	{
-		fputc('\n', fp);
 		if (flags & F_NOECHO)
-			tcsetattr(fileno(fp), TCSAFLUSH, &ots);
-		sigprocmask(SIG_SETMASK, &osig, NULL);
-		fclose(fp);
+			reset_terminal();
 	}
 
 	if (len >= bufsize)

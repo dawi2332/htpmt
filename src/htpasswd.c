@@ -204,11 +204,10 @@ password will be visible on the command line and in the process table.\n");
 
 	if (!flags.from_cmdline && !flags.from_stdin)
 	{
-		password = readpasswd("Password:", buf, MAX_STRING_LEN, F_TTY|F_NOECHO);
+		password = readpasswd("Password:", buf, MAX_STRING_LEN, F_NOECHO);
 		if (flags.verify)
 		{
-		       	password = readpasswd("Verify password:", buf1, MAX_STRING_LEN, F_TTY|F_NOECHO);
-			printf("%s\n%s\n", buf, buf1);
+		       	password = readpasswd("Verify password:", buf1, MAX_STRING_LEN, F_NOECHO);
 			if (strncmp(buf, buf1, MAX_STRING_LEN) != 0)
 			{
 				memset(buf, 0, MAX_STRING_LEN);

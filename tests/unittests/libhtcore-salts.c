@@ -50,9 +50,9 @@ main(int argc, char *argv[])
 
 	for (i = 0; i < NUMSALTS; i++)
 	{
-		for (j = 0; j < NUMSALTS; j++)
+		for (j = i+1; j < NUMSALTS; j++)
 		{
-			if (strcmp((char *) salts[i], (char *) salts[j]) == 0 && i != j)
+			if (strcmp((char *) salts[i], (char *) salts[j]) == 0)
 			{
 				duplicate_salts++;
 			}

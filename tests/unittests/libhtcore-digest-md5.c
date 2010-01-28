@@ -50,7 +50,7 @@ main(int argc, char *argv[])
 		"4F70eP1M4JjVQj.2JiOv52oBlNatlSaf",
 	};
 
-	char result[10][33] = {
+	char expected[10][33] = {
 		"c0b04fb4dc63d34c4e26b7becca887c3",
 		"7fa736cdbab018bcc6e11986b0555dca",
 		"dd778cf3d54418667a1bdae14f7b7708",
@@ -66,15 +66,15 @@ main(int argc, char *argv[])
 	int i;
 	char user[6] = "user";
 	char realm[7] = "realm";
-	char result_string[60];
+	char result[60];
 
 	for (i = 0; i < 10; i++)
 	{
 		user[4] = 0x30 + i;
 		realm[5] = 0x30 + i;
 
-		sprintf(result_string, "%s:%s", realm, result[i]);
-		assert(strcmp(digest_md5(user, realm, data[i], NULL), result_string) == 0);
+		sprintf(result, "%s:%s", realm, expected[i]);
+		assert(strcmp(digest_md5(user, realm, data[i], NULL), result) == 0);
 	}
 
 	return 0;

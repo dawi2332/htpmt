@@ -52,7 +52,7 @@ main(int argc, char *argv[])
 		"0RV1DZ/Gq4tyhQkPLedaeL6YHQDWwJ/n",
 	};
 
-	char result[10][14] = {
+	char expected[10][14] = {
 		"saakIhz/U1RX6",
 		"sa2C0o5tu0AY2",
 		"saSuUcxYOKG86",
@@ -71,7 +71,7 @@ main(int argc, char *argv[])
 	for (i = 0; i < 10; i++)
 	{
 		user[4] = 0x30 + i;
-		assert(strcmp(basic_crypt(user, NULL, data[i], SALT), result[i]) == 0);
+		assert(strcmp(basic_crypt(user, NULL, data[i], SALT), expected[i]) == 0);
 	}
 
 	return 0;

@@ -52,7 +52,7 @@ main(int argc, char *argv[])
 		"0RV1DZ/Gq4tyhQkPLedaeL6YHQDWwJ/n",
 	};
 
-	char result[10][23] = {
+	char expected[10][23] = {
 		"N/DXuXVvII8lpdPVtEwn1/",
 		".NuvJ8S6uuIa4QOefbArj/",
 		"zkZ296/nFqwPPvz28rLjv0",
@@ -67,13 +67,13 @@ main(int argc, char *argv[])
 
 	int i;
 	char user[6] = "user";
-	char result_string[60];
+	char result[60];
 
 	for (i = 0; i < 10; i++)
 	{
 		user[4] = 0x30 + i;
-		sprintf((char *) result_string, "$apr1$%s$%s",SALT, result[i]);
-		assert(strcmp(basic_apr1(user, NULL, data[i], SALT), result_string) == 0);
+		sprintf((char *) result, "$apr1$%s$%s",SALT, expected[i]);
+		assert(strcmp(basic_apr1(user, NULL, data[i], SALT), result) == 0);
 	}
 
 

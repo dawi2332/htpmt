@@ -50,7 +50,7 @@ main(int argc, char *argv[])
 		"0RV1DZ/Gq4tyhQkPLedaeL6YHQDWwJ/n",
 	};
 
-	char result[10][34] = {
+	char expected[10][34] = {
 		"{SHA}96OR7NAcqpk7WyK0z+JEXG2SSJE=",
 		"{SHA}uswqhk+KRvrk5BV//Ue1s9SpaqM=",
 		"{SHA}y+IZ4vF1d1Tn0FpMtDk+chIpbFA=",
@@ -69,7 +69,7 @@ main(int argc, char *argv[])
 	for (i = 0; i < 10; i++)
 	{
 		user[4] = 0x30 + i;
-		assert(strcmp(basic_sha1(user, NULL, data[i], NULL), result[i]) == 0);
+		assert(strcmp(basic_sha1(user, NULL, data[i], NULL), expected[i]) == 0);
 	}
 
 	return 0;

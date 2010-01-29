@@ -55,7 +55,8 @@ create_file(char *filename, char *username, char *realm, char *password)
 	struct stat sb;
 
 	if ((out = fopen(filename, "w")) == NULL)
-		error(EXIT_INVALIDFILE, "cannot not open \"%s\" for writing", filename);
+		error(EXIT_INVALIDFILE, "cannot not open \"%s\" for writing",
+			filename);
 
 	fprintf(out, "%s:%s\n", username, password);
 	fprintf(stderr, "Added record for user %s\n", username);
@@ -73,27 +74,34 @@ update_file(char *filename, char *username, char *realm, char *password)
 	struct stat sb;
 	char buf[MAX_STRING_LEN * 3];
 	char scratch[MAX_STRING_LEN * 3];
-	char *column1, *column2, *column3;
+	char *field1, *field2, *field3;
 	int found = 0;
 
 	out = tempfile();
 
 	if ((in = fopen(filename, "r")) == NULL)
-		error(EXIT_INVALIDFILE, "cannot not open \"%s\" for reading", filename);
+		error(EXIT_INVALIDFILE, "cannot not open \"%s\" for reading",
+			filename);
 
 	while (fgets(buf, sizeof(buf), in) != NULL)
 	{
-		if (buf[0] == '#' || buf[0] == '\n')
+		/* Don't touch comment lines or empty lines, ignore duplicate
+		 * records
+		 */
+		if (buf[0] == '#' || buf[0] == '\n'|| found > 0)
 		{
 			fputs(buf, out);
 			continue;
 		}
 		strncpy(scratch, buf, MAX_STRING_LEN);
-		column1 = strtok(scratch, ":");
-		column2 = strtok(NULL, ":");
-		column3 = strtok(NULL, ":");
+		field1 = strtok(scratch, ":");
+		field2 = strtok(NULL, ":");
+		field3 = strtok(NULL, ":");
 
-		if (strncmp(username, column1, MAX_STRING_LEN) == 0 && (realm == NULL || (strncmp(realm, column2, MAX_STRING_LEN) == 0)))
+		if (strncmp(username, field1, MAX_STRING_LEN) == 0 &&
+			((field3 == NULL && realm == NULL) ||
+			 ((field3 != NULL && realm != NULL) &&
+			  (strncmp(realm, field2, MAX_STRING_LEN) == 0))))
 		{
 			if (password != NULL)
 			{
@@ -101,7 +109,8 @@ update_file(char *filename, char *username, char *realm, char *password)
 				found++;
 			}
 			else
-				fprintf(stderr, "Deleted record for user %s\n", username);
+				fprintf(stderr, "Deleted record for user %s\n",
+					username);
 		}
 		else
 		{

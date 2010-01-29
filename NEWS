@@ -1,6 +1,15 @@
 HTPMT NEWS
 ==========
 
+Version 1.0.2
+ * File processing now stops after the first record that matches username or
+   username and realm is found. Any subsequent records are left untouched. This
+   avoids duplicate (i.e. overwritten) records and conforms with the way Apache
+   htdigest processes files.
+ * In order to avoid issues with files containing both Basic and Digest
+   records and in conformance with Apache htdigest, htpasswd and htdigest will
+   ony update or delete their respective type of record.
+
 Version 1.0.1
  * Too many or no characters entered at the password prompt or when reading the
    password from stdin no longer causes a segmentation fault.
@@ -11,5 +20,6 @@ Version 1.0.1
    been added in order to avoid buffer overflows.
  * The dist-hook prevented `make dist` to work properly, this has been fixed.
  * version() output has been corrected.
+
 Version 1.0
  * Initial Release

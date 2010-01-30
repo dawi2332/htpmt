@@ -110,4 +110,6 @@ extern int errno;
 extern void exit();
 #endif
 
+#define xstrcpy strcpy
+
 #endif /* !_SYSTEM_H */

@@ -1,23 +1,13 @@
-EXTRA_DIST = libmd.at libhtcore.at testsuite.at $(TESTSUITE) atlocal.in
 DISTCLEANFILES = atconfig package.m4
-CLEANFILES = testsuite.log
-MAINTAINERCLEANFILES = testsuite Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 
-SUBDIRS = unittests
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/libmd
+LDADD = $(top_builddir)/src/libhtcore.a $(top_builddir)/libmd/libmd.a
 
-TESTSUITE = $(srcdir)/testsuite
+noinst_PROGRAMS = htpmt_unittests libmd_unittests htpmt_regression_tests
 
-check-local: atconfig atlocal $(TESTSUITE)
-	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
+htpmt_unittests_SOURCES = htpmt_unittests.c fct.h
+libmd_unittests_SOURCES = libmd_unittests.c fct.h
+htpmt_regression_tests_SOURCES = htpmt_regression_tests.c fct.h
 
-installcheck-local: atconfig atlocal $(TESTSUITE) 
-	$(SHELL) '$(TESTSUITE)' AUTOTEST_PATH='$(bindir)' $(TESTSUITEFLAGS) 
-
-clean-local:
-	test ! -f $(TESTSUITE) || $(SHELL) $(TESTSUITE) --clean
-
-AUTOM4TE = $(SHELL) $(top_srcdir)/build-aux/missing --run autom4te
-AUTOTEST = $(AUTOM4TE) --language=autotest 
-$(TESTSUITE): $(srcdir)/testsuite.at $(srcdir)/package.m4 $(srcdir)/libmd.at
-	$(AUTOTEST) -I '$(srcdir)' -o $@.tmp $@.at 
-	mv $@.tmp $@ 
+TESTS = libmd_unittests htpmt_unittests htpmt_regression_tests

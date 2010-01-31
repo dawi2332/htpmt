@@ -6,26 +6,43 @@ const char program_name[] = "htpmt_regression_tests";
 
 FCT_BGN()
 {
-	FCT_QTEST_BGN(htpmt__salt_uniqueness)
+	#define NUMSALTS 1024
+	char salts[NUMSALTS][33];
+	unsigned int duplicate_salts = 0;
+	int i, j;
+
+	FCT_FIXTURE_SUITE_BGN(htpmt__salt)
 	{
-		#define NUMSALTS 1024
-		char salts[NUMSALTS][33];
-		unsigned int duplicate_salts = 0;
-		int i, j;
-
-		for (i = 0; i < NUMSALTS; i++)
+		FCT_SETUP_BGN()
 		{
-			strcpy((char *) salts[i], generate_salt(32));
-		}
-
-		for (i = 0; i < NUMSALTS; i++)
-		{
-			for (j = i+1; j < NUMSALTS; j++)
+			for (i = 0; i < NUMSALTS; i++)
 			{
-				fct_chk_neq_str(salts[i], salts[j]);
+				strcpy((char *) salts[i], generate_salt(32));
 			}
 		}
+		FCT_SETUP_END();
+
+		FCT_TEARDOWN_BGN()
+		{
+			memset(salts, '\0', sizeof(salts));
+		}
+		FCT_TEARDOWN_END();
+		
+		FCT_TEST_BGN(htpmt__salt_entropentropy)
+		{
+			fct_req(salts != NULL);
+
+			for (i = 0; i < NUMSALTS; i++)
+			{
+				for (j = i+1; j < NUMSALTS; j++)
+				{
+					fct_chk_neq_str(salts[i], salts[j]);
+				}
+			}
+		}
+		FCT_TEST_END();
 	}
-	FCT_QTEST_END();
+	FCT_FIXTURE_SUITE_END();
+		
 }
 FCT_END();

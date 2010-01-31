@@ -161,11 +161,11 @@ main(int argc, char *argv[])
 			syntax("you must specify a file and a username");
 		if (flags.from_cmdline && argc < 3) 
 			syntax("you must specify a file, a username and a password");
+		else
+			password = argv[2];
 
 		filename = argv[0];
 		username = argv[1];
-		if (argc == 3)
-			password = argv[2];
 	}
 	else
 	{
@@ -173,10 +173,10 @@ main(int argc, char *argv[])
 			syntax("you must specify a username");
 		if (flags.from_cmdline && argc < 2)
 			syntax("you must specify a username and a password");
+		else
+			password = argv[1];
 
 		username = argv[0];
-		if (argc == 2)
-			password = argv[1];
 	}
 	
 	if (strlen(username) > MAX_STRING_LEN-1)

@@ -28,7 +28,7 @@ FCT_BGN()
 		}
 		FCT_TEARDOWN_END();
 		
-		FCT_TEST_BGN(htpmt__salt_entropentropy)
+		FCT_TEST_BGN(htpmt__salt_entropy)
 		{
 			fct_req(salts != NULL);
 

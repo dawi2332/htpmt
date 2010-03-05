@@ -120,7 +120,7 @@ readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
 	}
 
 	if (len >= bufsize)
-		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", bufsize-1);
+		errx(EXIT_OVERFLOW, "the password must not contain more than %i characters", bufsize-1);
 
 	return buffer;
 }

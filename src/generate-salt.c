@@ -64,12 +64,12 @@ seed_random(void)
 		if (read(fd, (void *) &seed, len) != (size_t) len)
 		{
 			close(fd);	
-			error(EXIT_FAILURE, "reading from '%s' doesn't yield enough entropy to seed the pseudo-random number generator", RANDOMDEV);
+			errx(EXIT_FAILURE, "reading from '%s' doesn't yield enough entropy to seed the pseudo-random number generator", RANDOMDEV);
 		}
 	}
 	else
 	{
-		error(EXIT_FAILURE, "failed to seed the pseudo-random number generator with '%s'", RANDOMDEV);
+		errx(EXIT_FAILURE, "failed to seed the pseudo-random number generator with '%s'", RANDOMDEV);
 	}
 
 	close(fd);

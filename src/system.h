@@ -75,6 +75,9 @@
 #ifdef HAVE_ERRNO_H
 #	include <errno.h>
 #endif
+#ifdef HAVE_ERR_H
+#	include <err.h>
+#endif
 
 #define MAX_STRING_LEN 256
 

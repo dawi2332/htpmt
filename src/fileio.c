@@ -55,7 +55,7 @@ create_file(char *filename, char *username, char *realm, char *password)
 	struct stat sb;
 
 	if ((out = fopen(filename, "w")) == NULL)
-		error(EXIT_INVALIDFILE, "cannot not open \"%s\" for writing",
+		err(EXIT_INVALIDFILE, "cannot not open \"%s\" for writing",
 			filename);
 
 	fprintf(out, "%s:%s\n", username, password);
@@ -80,7 +80,7 @@ update_file(char *filename, char *username, char *realm, char *password)
 	out = tempfile();
 
 	if ((in = fopen(filename, "r")) == NULL)
-		error(EXIT_INVALIDFILE, "cannot not open \"%s\" for reading",
+		err(EXIT_INVALIDFILE, "cannot not open \"%s\" for reading",
 			filename);
 
 	while (fgets(buf, sizeof(buf), in) != NULL)

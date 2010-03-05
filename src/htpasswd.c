@@ -31,7 +31,6 @@
 char* program_name;
 
 #include "system.h"
-#include "error.h"
 #include "basic-auth.h"
 #include "fileio.h"
 #include "readpasswd.h"
@@ -180,10 +179,10 @@ main(int argc, char *argv[])
 	}
 	
 	if (strlen(username) > MAX_STRING_LEN-1)
-		error(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN);
+		errx(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN);
 
 	if (strchr(username, ':') != NULL)
-		error(EXIT_ILLEGALCHARS, "\
+		errx(EXIT_ILLEGALCHARS, "\
 the username must not contain the character ':'");
 
 	if (flags.force_plain && flags.warn)
@@ -211,7 +210,7 @@ password will be visible on the command line and in the process table.\n");
 			if (strncmp(buf, buf1, MAX_STRING_LEN) != 0)
 			{
 				memset(buf, 0, MAX_STRING_LEN);
-				error(EXIT_VERIFICATION, "password mismatch");
+				errx(EXIT_VERIFICATION, "password mismatch");
 			}
 		}
 	}
@@ -220,7 +219,7 @@ password will be visible on the command line and in the process table.\n");
 		password = readpasswd("", buf, MAX_STRING_LEN, 0);
 
 	if (strlen(password) > MAX_STRING_LEN-1)
-		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
+		errx(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
 
 	if (flags.force_plain)
 		secret = password;

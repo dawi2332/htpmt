@@ -31,7 +31,6 @@
 char* program_name;
 
 #include "system.h"
-#include "error.h"
 #include "digest-auth.h"
 #include "fileio.h"
 #include "readpasswd.h"
@@ -142,11 +141,17 @@ main(int argc, char *argv[])
 	}
 	
 	if (strlen(username) > MAX_STRING_LEN-1)
-		error(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN);
+		errx(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN);
 
 	if (strchr(username, ':') != NULL)
-		error(EXIT_ILLEGALCHARS, "\
-the username must not contain the character ':'");
+		errx(EXIT_ILLEGALCHARS, "the username must not contain the character ':'");
+
+	if (strlen(realm) > MAX_STRING_LEN-1)
+		errx(EXIT_OVERFLOW, "the realm must not contain more than %i characters", MAX_STRING_LEN-1);
+
+	if (strchr(realm, ':') != NULL)
+		errx(EXIT_ILLEGALCHARS, "the realm must not contain the character ':'");
+
 
 	if (!flags.from_stdin)
 	{
@@ -157,7 +162,7 @@ the username must not contain the character ':'");
 			if (strncmp(buf, buf1, MAX_STRING_LEN) != 0)
 			{
 				memset(buf, 0, MAX_STRING_LEN);
-				error(EXIT_VERIFICATION, "password mismatch");
+				errx(EXIT_VERIFICATION, "password mismatch");
 			}
 		}
 	}
@@ -166,10 +171,7 @@ the username must not contain the character ':'");
 		password = readpasswd("", buf, MAX_STRING_LEN, 0);
 
 	if (strlen(password) > MAX_STRING_LEN-1)
-		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
-
-	if (strlen(realm) > MAX_STRING_LEN-1)
-		error(EXIT_OVERFLOW, "the realm must not contain more than %i characters", MAX_STRING_LEN-1);
+		errx(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
 
 	secret = digest_md5(username, realm, password, NULL);
 

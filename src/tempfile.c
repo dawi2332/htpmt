@@ -29,7 +29,6 @@
 /* $Id$ */
 
 #include "system.h"
-#include "error.h"
 
 #ifndef TMPFILE_TEMPLATE
 #define TMPFILE_TEMPLATE "tmpXXXXXXXXXXXXXXXX"
@@ -52,7 +51,7 @@ tempfile()
 	if ((fd == -1) || (file = fdopen(fd, "r+")) == NULL)
 	{
 		close(fd);
-		error(EXIT_FAILURE, "cannot create temporary file in %s", P_tmpdir);
+		err(EXIT_FAILURE, "cannot create temporary file in %s", P_tmpdir);
 	}
 
 	remove(temp);

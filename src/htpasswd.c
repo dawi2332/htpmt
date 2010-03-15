@@ -182,24 +182,16 @@ main(int argc, char *argv[])
 		errx(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN);
 
 	if (strchr(username, ':') != NULL)
-		errx(EXIT_ILLEGALCHARS, "\
-the username must not contain the character ':'");
+		errx(EXIT_ILLEGALCHARS, "the username must not contain the character ':'");
 
 	if (flags.force_plain && flags.warn)
-		warn("\
-the use of the `-p' option is discouraged since anybody with\n\
-access to the password file can read (and possibly abuse) it. Use only when\n\
-REALLY needed.\n");
+		warnx(" the use of the `-p' option is discouraged since anybody with access to the password file can read (and possibly abuse) it. Use only when REALLY needed.");
 
 	if (flags.force_crypt && flags.warn)
-		warn("\
-using the `-d' option may require truncating the password to\n\
-eight characters\n");
+		warnx("using the `-d' option may require truncating the password to eight characters.");
 
 	if (flags.from_cmdline && flags.warn)
-		warn("\
-the use of the `-b' option is discouraged since the unencrypted\n\
-password will be visible on the command line and in the process table.\n");
+		warnx("the use of the `-b' option is discouraged since the unencrypted password will be visible on the command line and in the process table.");
 
 	if (!flags.from_cmdline && !flags.from_stdin)
 	{

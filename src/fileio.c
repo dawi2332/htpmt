@@ -109,8 +109,14 @@ update_file(char *filename, char *username, char *realm, char *password)
 				found++;
 			}
 			else
-				fprintf(stderr, "Deleted record for user %s\n",
-					username);
+			{
+				if (realm == NULL)
+					fprintf(stderr, "Deleted record for user %s\n", username);
+				else
+					fprintf(stderr, "Deleted record for user %s in realm %s\n", username, realm);
+
+			}
+
 		}
 		else
 		{

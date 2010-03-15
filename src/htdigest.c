@@ -209,8 +209,7 @@ Options:\n\n\
                               prompting for it\n\
   --no-verify                 don't verify passwords when prompting\n\
   --version                   prints version\n\
-  --help                      prints this brief help\n\n\
-REALM is a mandatory parameter for every option but `-D'.\n");
+  --help                      prints this brief help\n");
 	printf("\n\
 Report bugs at http://code.google.com/p/htpmt/\n");
 

@@ -148,8 +148,13 @@ main(int argc, char *argv[])
 		error(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN);
 
 	if (strchr(username, ':') != NULL)
-		error(EXIT_ILLEGALCHARS, "\
-the username must not contain the character ':'");
+		error(EXIT_ILLEGALCHARS, "the username must not contain the character ':'");
+
+	if (strlen(realm) > MAX_STRING_LEN-1)
+		error(EXIT_OVERFLOW, "the realm must not contain more than %i characters", MAX_STRING_LEN-1);
+
+	if (strchr(realm, ':') != NULL)
+		error(EXIT_ILLEGALCHARS, "the realm must not contain the character ':'");
 
 	if (!flags.from_stdin)
 	{
@@ -187,9 +192,6 @@ the username must not contain the character ':'");
 
 	if (strlen(password) > MAX_STRING_LEN-1)
 		error(EXIT_OVERFLOW, "the password must not contain more than %i characters", MAX_STRING_LEN-1);
-
-	if (strlen(realm) > MAX_STRING_LEN-1)
-		error(EXIT_OVERFLOW, "the realm must not contain more than %i characters", MAX_STRING_LEN-1);
 
 	secret = digest_md5(username, realm, password, NULL);
 

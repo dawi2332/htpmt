@@ -5,6 +5,6 @@ MAINTAINERCLEANFILES = aclocal.m4 configure config.h.in Makefile.in $(distdir).t
 dist-hook:
 	$(srcdir)/build-aux/missing --run svn info $(abs_srcdir) \
 	    	>/dev/null 2>&1 \
-	       	&& $(srcdir)/build-aux/missing --run svn log $(abs_srcdir) \
+	       	&& $(srcdir)/build-aux/missing --run svn log -g $(abs_srcdir) \
 	       	| $(srcdir)/contrib/gnuify-changelog  > $(distdir)/ChangeLog \
 		|| exit 0

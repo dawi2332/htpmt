@@ -1,6 +1,13 @@
 HTPMT NEWS
 ==========
 
+Version 1.0.3
+ * Fixed a possible segmentation fault occuring when using '-b' and '-n' at the
+   same time.
+ * Illegal characters (namely ':') in the realm string are now properly
+   detected by htdigest. Additionally, the string length check is now performed
+   before entering the password.
+
 Version 1.0.2
  * File processing now stops after the first record that matches username or
    username and realm is found. Any subsequent records are left untouched. This

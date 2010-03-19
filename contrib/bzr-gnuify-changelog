@@ -1,7 +1,0 @@
-#! /bin/sh
-# use the bazaar gnulog plugin to create a nice ChangeLog file
-
-if [[ -d .bzr && $(which bzr) ]]
-then
-	bzr log -v --log-format 'gnu' > $1
-fi

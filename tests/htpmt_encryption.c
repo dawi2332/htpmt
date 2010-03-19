@@ -5,11 +5,9 @@
 
 #define SALT "salt1234"
 
-const char program_name[] = "htpmt_unittests";
-
 FCT_BGN()
 {
-	FCT_FIXTURE_SUITE_BGN(htpmt)
+	FCT_FIXTURE_SUITE_BGN(htpmt_encryption)
 	{
 		char data[10][33] = {
 			"eBpaj2MFS5dwCJoOR4f69H6KOpo1jVGD",

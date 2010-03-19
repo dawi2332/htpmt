@@ -2,8 +2,6 @@
 #include "fct.h"
 #include <generate-salt.h>
 
-const char program_name[] = "htpmt_regression_tests";
-
 FCT_BGN()
 {
 	#define NUMSALTS 1024

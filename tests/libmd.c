@@ -3,8 +3,6 @@
 #include <md5.h>
 #include <sha.h>
 
-const char program_name[] = "libmd_unittests";
-
 static char *
 MD5_String(char *string)
 {
@@ -52,7 +50,7 @@ SHA1_String(char *string)
 
 FCT_BGN()
 {
-	FCT_QTEST_BGN(libmd__md5_algorithm)
+	FCT_QTEST_BGN(libmd__md5)
 	{
 		fct_chk_neq_str(MD5_String(""), "56d41d8cd98f00b204e9800998ecf8427e");
 		fct_chk_eq_str(MD5_String("abc"), "900150983cd24fb0d6963f7d28e17f72");
@@ -63,7 +61,7 @@ FCT_BGN()
 	}
 	FCT_QTEST_END();
 
-	FCT_QTEST_BGN(libmd__sha1_algorithm)
+	FCT_QTEST_BGN(libmd__sha1)
 	{
 		fct_chk_eq_str(SHA1_String(""), "da39a3ee5e6b4b0d3255bfef95601890afd80709");
 		fct_chk_eq_str(SHA1_String("abc"), "a9993e364706816aba3e25717850c26c9cd0d89d");

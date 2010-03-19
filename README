@@ -1,5 +1,48 @@
-HTPMT README
-============
-David Winter <dawi2332@gmail.com>
-$Id$
+htpmt is a suite of tools for managing HTTP authentication files that are used by web servers to authenticate users. Currently htpmt includes tools for Basic and Digest HTTP authentication; they are designed to be a drop-in replacement for the htpasswd and htdigest tools that come with Apache httpd.
 
+htpmt is distributed under the terms of the Simplified BSD License (see COPYING for more information).
+
+A quick overview of htpmt htpasswd & htdigest features:
+ - crypt(), SHA-1 and MD5 (aka APR1, a Crypt-MD5 variant) encryption of passwords for use with HTTP Basic Authentication
+ - MD5 encryption of passwords with HTTP Digest Authentication
+ - add, update & delete user records
+ - output to file or stdout
+ - password input from tty, command line (only htpasswd) or stdin
+ - uses /dev/random for salt generation when available
+ - exit codes and command line options conform with Apache htpasswd/htdigest
+
+Requirements for building from a source tarball:
+ - compiler tool chain
+ - GNU make (or compatible)
+ - Bourne-compatible shell
+
+If you checked out htpmt from the repository you'll also need:
+ - GNU autoconf
+ - GNU automake
+ - GNU m4
+ - Perl
+ - asciidoc
+ - fop
+ - docbook-xsl (probably)
+ - libxslt
+ - libxml2
+
+Please see the INSTALL for detailed installation instructions.
+
+Project website:
+	at Google Code: http://code.google.com/p/htpmt
+	at Ohloh:	http://www.ohloh.net/p/htpmt
+
+Subversion repository: http://htpmt.googlecode.com/svn
+
+Mailing lists:
+	htpmt-users@googlegroups.com
+	htpmt-developers@googlegroups.com
+You are welcome to join our mailing lists at http://groups.google.com/group/htpmt-users and http://groups.google.com/group/htpmt-developers
+
+Bug reports & feature requests:
+Please enter issues for bug reports and feature requests at http://code.google.com/p/htpmt/issues
+
+In case of a bug report: please include any relevant information so that the bug can be reproduced. If possible, attach program output and/or screenshots. Also include command line options, version number, hardware and OS information. If you built htpmt yourself, also include configure flags and attach config.log. 
+
+Any contributions in the form of patches, bug reports, feature requests, etc. are most welcome. Feel free to get in touch with us over the htpmt-developers mailing list if you have come up with an idea for improving or extending htpmt. 

@@ -97,7 +97,11 @@ generate_salt(size_t length)
 
 	if (!rand_seeded)
 	{
+#if defined HAVE_SRANDOMDEV  & SRANDOM
+		srandomdev();
+#else
 		seed_random();
+#endif
 		rand_seeded = 1;
 	}
 

@@ -1,23 +1,9 @@
-EXTRA_DIST = libmd.at libhtcore.at testsuite.at $(TESTSUITE) atlocal.in
-DISTCLEANFILES = atconfig package.m4
-CLEANFILES = testsuite.log
-MAINTAINERCLEANFILES = testsuite Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
+EXTRA_DIST = fct.h
 
-SUBDIRS = unittests
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/libmd
+LDADD = $(top_builddir)/src/libhtcore.a $(top_builddir)/libmd/libmd.a
 
-TESTSUITE = $(srcdir)/testsuite
-
-check-local: atconfig atlocal $(TESTSUITE)
-	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
-
-installcheck-local: atconfig atlocal $(TESTSUITE) 
-	$(SHELL) '$(TESTSUITE)' AUTOTEST_PATH='$(bindir)' $(TESTSUITEFLAGS) 
-
-clean-local:
-	test ! -f $(TESTSUITE) || $(SHELL) $(TESTSUITE) --clean
-
-AUTOM4TE = $(SHELL) $(top_srcdir)/build-aux/missing --run autom4te
-AUTOTEST = $(AUTOM4TE) --language=autotest 
-$(TESTSUITE): $(srcdir)/testsuite.at $(srcdir)/package.m4 $(srcdir)/libmd.at
-	$(AUTOTEST) -I '$(srcdir)' -o $@.tmp $@.at 
-	mv $@.tmp $@ 
+check_PROGRAMS = libmd htpmt_encryption htpmt_salt dummy_tests
+TESTS = libmd htpmt_encryption htpmt_salt #dummy_tests
+XFAIL_TESTS = dummy_tests

@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: htconvert.c 286 2008-12-19 02:04:27Z david $ */
+/* $Id$ */
 
 char *program_name;
 

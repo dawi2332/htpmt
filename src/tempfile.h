@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: tempfile.h 278 2008-12-15 09:16:04Z david $ */
+/* $Id$ */
 
 #ifndef _TEMPFILE_H
 #define _TEMPFILE_H

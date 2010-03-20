@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: generate-salt.c 286 2008-12-19 02:04:27Z david $ */
+/* $Id$ */
 
 #include <system.h>
 #include <fcntl.h>

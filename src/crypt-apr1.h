@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: crypt-apr1.h 286 2008-12-19 02:04:27Z david $ */
+/* $Id$ */
 
 #ifndef _CRYPT_APR_H
 #define _CRYPT_APR_H

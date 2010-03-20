@@ -26,11 +26,12 @@
  *
  */
 
-/* $Id: htdigest.c 286 2008-12-19 02:04:27Z david $ */
+/* $Id$ */
 
 char* program_name;
 
 #include "system.h"
+#include "version.h"
 #include "error.h"
 #include "digest-auth.h"
 #include "fileio.h"
@@ -240,7 +241,11 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 void
 version(void)
 {
-	printf("%s - %s %s\n", program_name, PACKAGE_NAME, PACKAGE_VERSION);
+#ifdef VERSION
+	printf("%s - %s %s (%s)\n", program_name, PACKAGE_NAME, VERSION, REVISION);
+#else
+	printf("%s - %s %s\n", program_name, PACKAGE_NAME, REVISION);
+#endif
 	printf("\
 Copyright (c) 2008 David Winter (dawi2332@gmail.com). All rights reserved.\n\
 This is open source software, see the source for copying conditions.\n");

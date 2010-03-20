@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: digest-auth.c 287 2008-12-19 02:07:28Z david $ */
+/* $Id$ */
 
 #include "system.h"
 #include "md5.h"

@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: system.h 279 2008-12-17 19:53:52Z david $ */
+/* $Id$ */
 
 #ifndef _SYSTEM_H
 #define _SYSTEM_H

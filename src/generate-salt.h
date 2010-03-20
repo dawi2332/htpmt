@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: generate-salt.h 286 2008-12-19 02:04:27Z david $ */
+/* $Id$ */
 
 #ifndef _GENERATE_SALT_H
 #define _GENERATE_SALT_H

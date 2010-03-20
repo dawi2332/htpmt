@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: fileio.h 277 2008-12-14 00:23:50Z david $ */
+/* $Id$ */
 
 #ifndef _FILEIO_H
 #define _FILEIO_H 1

@@ -26,7 +26,7 @@
  *
  */
 
-/* $Id: digest-auth.h 278 2008-12-15 09:16:04Z david $ */
+/* $Id$ */
 
 #ifndef _DIGEST_AUTH_H
 #define _DIGEST_AUTH_H 1

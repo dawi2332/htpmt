@@ -29,6 +29,7 @@
 /* $Id$ */
 
 #include "system.h"
+#include "version.h"
 #include "basic-auth.h"
 #include "fileio.h"
 #include "readpasswd.h"
@@ -181,7 +182,7 @@ main(int argc, char *argv[])
 		errx(EXIT_ILLEGALCHARS, "the username must not contain the character ':'");
 
 	if (flags.force_plain && flags.warn)
-		warnx(" the use of the `-p' option is discouraged since anybody with access to the password file can read (and possibly abuse) it. Use only when REALLY needed.");
+		warnx("the use of the `-p' option is discouraged since anybody with access to the password file can read (and possibly abuse) it. Use only when REALLY needed.");
 
 	if (flags.force_crypt && flags.warn)
 		warnx("using the `-d' option may require truncating the password to eight characters.");
@@ -268,7 +269,11 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 void
 version(void)
 {
-	printf("%s - %s %s\n", getprogname(), PACKAGE_NAME, PACKAGE_VERSION);
+#ifdef VERSION
+	printf("%s - %s %s (%s)\n", getprogname(), PACKAGE_NAME, VERSION, REVISION);
+#else
+	printf("%s - %s %s\n", getprogname(), PACKAGE_NAME, REVISION);
+#endif
 	printf("\
 Copyright (c) 2008 David Winter (dawi2332@gmail.com). All rights reserved.\n\
 This is open source software, see the source for copying conditions.\n");

@@ -32,6 +32,6 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([strerror mktemp mkstemp mkstemps tcsetattr atexit random srandom srandomdev rand srand err errx warn warnx])
-AC_CONFIG_FILES([Makefile src/Makefile contrib/Makefile man/Makefile doc/Makefile libmd/Makefile tests/Makefile]) 
+AC_CONFIG_FILES([Makefile build-aux/Makefile src/Makefile contrib/Makefile man/Makefile doc/Makefile libmd/Makefile tests/Makefile]) 
 
 AC_OUTPUT

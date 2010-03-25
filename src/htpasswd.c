@@ -220,7 +220,7 @@ main(int argc, char *argv[])
 		secret = basic_apr1(username, NULL, password, NULL);
 
 	if (strlen(secret) + strlen(username) + 1 > MAX_STRING_LEN-1)
-		errx(EXIT_OVERFLOW, "resultant user record must not be longer than %i characters", MAX_STRING_LEN-1);
+		errx(EXIT_OVERFLOW, "resultant user record must not exceed %i characters", MAX_STRING_LEN-1);
 
 	if (!flags.to_stdout)
 	{

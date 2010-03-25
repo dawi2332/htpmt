@@ -14,7 +14,7 @@ libhtcore_a_DEPENDENCIES = $(top_builddir)/libmd/libmd.a
 
 version.h.tmp: $(top_srcdir)/build-aux/version
 	svn info >/dev/null 2>&1 \
-	&& $< $(top_srcdir) > $@ \
+	&& $< $(abs_top_srcdir) > $@ \
 	|| exit 0
 version.h: version.h.tmp
 	cmp $< $@ >/dev/null 2>&1 \

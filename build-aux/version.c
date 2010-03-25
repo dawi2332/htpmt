@@ -37,6 +37,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <err.h>
 
 int eq(char *a, char *b)
 {
@@ -79,7 +80,7 @@ int main(int argc, char *argv[])
 	fscanf(pipe, "%s", version);
 	pclose(pipe);
 
-	sprintf(cmd, "svn info %s", argv[1]);
+	sprintf(cmd, "svn info %s 2>/dev/null", argv[1]);
 	pipe = popen(cmd, "r");
 
 	while (fgets(buf, sizeof(buf), pipe) != NULL)
@@ -134,7 +135,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		return 1;
+		errx(1, "could not determine svn revision, '%s' is not under version control", argv[1]);
 	}
 	return 0;
 }

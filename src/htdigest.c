@@ -138,7 +138,7 @@ main(int argc, char *argv[])
 	}
 	
 	if (strlen(username) > MAX_STRING_LEN-1)
-		errx(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN);
+		errx(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN-1);
 
 	if (strchr(username, ':') != NULL)
 		errx(EXIT_ILLEGALCHARS, "the username must not contain the character ':'");

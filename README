@@ -10,7 +10,7 @@ htpmt is distributed under the terms of the Simplified BSD License
 A quick overview of htpmt htpasswd & htdigest features:
  * crypt(), SHA-1 and MD5 (aka APR1, a Crypt-MD5 variant) encryption
  of passwords for use with HTTP Basic Authentication
- * MD5 encryption of passwords with HTTP Digest Authentication
+ * MD5 encryption of passwords for use with HTTP Digest Authentication
  * add, update & delete user records
  * output to file or stdout
  * password input from tty, command line (only htpasswd) or stdin
@@ -34,7 +34,7 @@ If you checked out htpmt from the repository you'll also need:
  * libxslt
  * libxml2
 
-Please see the INSTALL for detailed installation instructions.
+Please see INSTALL for detailed installation instructions.
 
 Project website:
 	at Google Code: http://code.google.com/p/htpmt
@@ -55,12 +55,11 @@ http://code.google.com/p/htpmt/issues
 
 In case of a bug report: please include any relevant information
 so that the bug can be reproduced. If possible, attach program
-output and/or screenshots. Also include command line options, version
-or Last Changed Revision and URL ('svn info'), hardware and OS
-information. If you built htpmt yourself, also include configure
-flags (if any) and attach config.log.
+output and/or screenshots. Also include command line options,
+version, hardware and OS information. If you built htpmt yourself,
+also include configure flags (if any) and attach config.log.
 
-Any contributions in the form of patches, bug reports, feature
-requests, etc. are most welcome. Feel free to get in touch with us
-over the htpmt-developers mailing list if you have come up with an
-idea for improving or extending htpmt.
+Any contributions like patches, bug reports, feature requests, etc.
+are most welcome. Feel free to get in touch with us over the
+htpmt-developers mailing list if you have come up with an idea for
+improving or extending htpmt.

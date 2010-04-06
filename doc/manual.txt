@@ -1,0 +1,8 @@
+
+Restrictions
+============
+
+For compatibility with Apache htpasswd & htdigest, htpmt restricts user records to 255 characters. Versions of htpmt prior to 1.1 restricted it to 511 characters for htpasswd records or 767 characters for htdigest records.
+
+Additionally usernames and realms must not exceed 255 characters each.
+

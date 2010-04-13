@@ -102,6 +102,8 @@ int main(int argc, char *argv[])
 	sprintf(openssl_version, "%c.%c.%c%c", major, minor, micro, patch);
 	printf("#define OPENSSL_VERSION_SHORT \"%s\"\n", openssl_version);
 	printf("#define FLAGS \"openssl-%s\"\n", openssl_version);
+#else
+	printf("#define FLAGS\n");
 #endif
 
 	pipe = popen(cmd, "r");

@@ -87,24 +87,19 @@ int main(int argc, char *argv[])
 	char url[1024];
 	char *ptr, *path1, *path2, *path3;
 
-	if (argc != 2)
-	{
-		usage();
-	}
-	sprintf(cmd, "svnversion -n %s", argv[1]);
-
 #ifdef HAVE_LIBCRYPTO
 	unsigned char major = (OPENSSL_VERSION_NUMBER >> 28 & 0xff) + 0x30;
 	unsigned char minor = (OPENSSL_VERSION_NUMBER >> 20 & 0xff) + 0x30;
 	unsigned char micro = (OPENSSL_VERSION_NUMBER >> 12 & 0xff) + 0x30;
 	unsigned char patch = (OPENSSL_VERSION_NUMBER >> 4 & 0xff) + 0x60;
 	char openssl_version[20];
-	sprintf(openssl_version, "%c.%c.%c%c", major, minor, micro, patch);
-	printf("#define OPENSSL_VERSION_SHORT \"%s\"\n", openssl_version);
-	printf("#define FLAGS \"openssl-%s\"\n", openssl_version);
-#else
-	printf("#define FLAGS\n");
 #endif
+
+	if (argc != 2)
+	{
+		usage();
+	}
+	sprintf(cmd, "svnversion -n %s", argv[1]);
 
 	pipe = popen(cmd, "r");
 	fscanf(pipe, "%s", version);
@@ -123,7 +118,6 @@ int main(int argc, char *argv[])
 			strcpy(url, ptr);
 			ptr = strrchr(url, '\n');
 			*ptr = '\0';
-			
 		}
 	}
 
@@ -131,6 +125,16 @@ int main(int argc, char *argv[])
 
 	if (!eq(version, "exported"))
 	{
+#ifdef HAVE_LIBCRYPTO
+		sprintf(openssl_version, "%c.%c.%c%c", major, minor, micro, patch);
+		printf("#define OPENSSL_VERSION_SHORT \"%s\"\n", openssl_version);
+		printf("#define FLAGS \"openssl-%s\"\n", openssl_version);
+#else
+		printf("#define FLAGS\n");
+#endif
+		printf("#define SVN_VERSION \"%s\"\n", version);
+		printf("#define SVN_URL \"%s\"\n", url);
+
 		path1 = strrchr(url, '/');
 		*path1 = '\0';
 		path1++;
@@ -140,8 +144,7 @@ int main(int argc, char *argv[])
 		path3 = strrchr(url, '/');
 		*path3 = '\0';
 		path3++;
-		printf("#define SVN_VERSION \"%s\"\n", version);
-		printf("#define SVN_URL \"%s/%s/%s/%s\"\n", url, path3, path2, path1);
+
 		printf("#define VERSION_LONG \"");
 
 		if (eq(path1, "trunk"))
@@ -162,7 +165,7 @@ int main(int argc, char *argv[])
 		}
 		else if(eq(path3, "tags") && eq(path2, "releases"))
 		{
-			printf("%s\"\n", version);
+			printf("%s\"\n", VERSION);
 			printf("#define REVISION \"releases/%s@r%s\"\n", path1, version);
 		}
 		printf("#define VERSION_WITH_FLAGS VERSION_LONG/**/\" \"/**/FLAGS \n");

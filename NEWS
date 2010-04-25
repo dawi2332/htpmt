@@ -1,2 +1,5 @@
-Version 1.0
- * Initial Release
+
+Version 1.2
+ * Added support for using OpenSSL instead of the built-in libmd for Message Digests. This is an optional feature and will only be enabled when 'configure' is called with the flag '--with-openssl'. 
+ * The --version argument of htpasswd and htdigest will feature the version of OpenSSL it was built against.
+ * libmd and the libmd testsuite will only be built (and run in the latter case), if OpenSSL support was not requested.

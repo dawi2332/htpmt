@@ -88,10 +88,10 @@ int main(int argc, char *argv[])
 	char *ptr, *path1, *path2, *path3;
 
 #ifdef HAVE_LIBCRYPTO
-	unsigned char major = (OPENSSL_VERSION_NUMBER >> 28 & 0xff) + 0x30;
-	unsigned char minor = (OPENSSL_VERSION_NUMBER >> 20 & 0xff) + 0x30;
-	unsigned char micro = (OPENSSL_VERSION_NUMBER >> 12 & 0xff) + 0x30;
-	unsigned char patch = (OPENSSL_VERSION_NUMBER >> 4 & 0xff) + 0x60;
+#define major (char) (OPENSSL_VERSION_NUMBER >> 28 & 0xff) + 0x30
+#define minor (char) (OPENSSL_VERSION_NUMBER >> 20 & 0xff) + 0x30
+#define micro (char) (OPENSSL_VERSION_NUMBER >> 12 & 0xff) + 0x30
+#define patch (char) (OPENSSL_VERSION_NUMBER >> 4 & 0xff) + 0x60
 	char openssl_version[20];
 #endif
 

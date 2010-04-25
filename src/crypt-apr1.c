@@ -27,8 +27,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <md5.h>
-#define MD5_SIZE MD5_DIGEST_LENGTH
+#include "md5.h"
 
 static unsigned char itoa64[] =         /* 0 ... 63 => ascii - 64 */
         "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

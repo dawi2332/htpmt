@@ -1,7 +1,7 @@
 #include <system.h>
 #include "fct.h"
-#include <md5.h>
-#include <sha.h>
+#include <libmd/md5.h>
+#include <libmd/sha.h>
 
 static char *
 MD5_String(char *string)

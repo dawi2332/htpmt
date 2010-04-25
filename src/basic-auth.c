@@ -29,8 +29,8 @@
 /* $Id$ */
 
 #include <system.h>
-#include <sha.h>
-#include <md5.h>
+#include "sha.h"
+#include "md5.h"
 #include "generate-salt.h"
 #include "crypt-apr1.h"
 

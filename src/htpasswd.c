@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 David Winter (dawi2332@gmail.com)
+ * Copyright 2008, 2009, 2010 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -274,7 +274,7 @@ version(void)
 {
 	printf("%s - %s %s\n", PROGNAME(), PACKAGE_NAME, VERSION_WITH_FLAGS);
 	printf("\
-Copyright (c) 2008 David Winter (dawi2332@gmail.com). All rights reserved.\n\
+Copyright 2008, 2009, 2010 David Winter. All rights reserved.\n\
 This is open source software, see the source for copying conditions.\n");
 	exit(EXIT_SUCCESS);
 }

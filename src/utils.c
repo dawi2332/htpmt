@@ -30,9 +30,10 @@
 
 #include <system.h>
 
-void syntax(char * s)
+void syntax(char *s)
 {
 	warnx(s);
-	fprintf(stderr, "Try `%s --help' for more information.\n", getprogname());
+	fprintf(stderr, "Try `%s --help' for more information.\n", PROGNAME());
 	exit(EXIT_SYNTAXERROR);
 }
+

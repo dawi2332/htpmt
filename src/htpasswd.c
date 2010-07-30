@@ -245,7 +245,7 @@ main(int argc, char *argv[])
 void
 usage(void)
 {
-	printf("Usage: %s [OPTIONS]... [FILE] USERNAME [PASSWORD]\n", getprogname());
+	printf("Usage: %s [OPTIONS]... [FILE] USERNAME [PASSWORD]\n", PROGNAME());
 	printf("\n\
 Options:\n\n\
   -c, --create                create FILE; overwrite FILE if it exists\n\
@@ -272,7 +272,7 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 void
 version(void)
 {
-	printf("%s - %s %s\n", getprogname(), PACKAGE_NAME, VERSION_WITH_FLAGS);
+	printf("%s - %s %s\n", PROGNAME(), PACKAGE_NAME, VERSION_WITH_FLAGS);
 	printf("\
 Copyright (c) 2008 David Winter (dawi2332@gmail.com). All rights reserved.\n\
 This is open source software, see the source for copying conditions.\n");

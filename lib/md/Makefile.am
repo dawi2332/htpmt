@@ -1,5 +1,6 @@
 MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = sha.h md5.h md5c.c sha1c.c sha_locl.h
+SUBDIRS = tests
 
 if ENABLE_LIBMD
 noinst_LIBRARIES = libmd.a

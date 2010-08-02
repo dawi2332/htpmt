@@ -28,8 +28,8 @@
 
 /* $Id$ */
 
-#ifndef _SYSTEM_H
-#define _SYSTEM_H
+#ifndef LIBHTPMT_SYSTEM_H
+#define LIBHTPMT_SYSTEM_H
 
 #include <config.h>
 #include <stdio.h> 
@@ -79,31 +79,15 @@
 #	include <err.h>
 #endif
 
-#define MAX_STRING_LEN 256
-
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE 1
+#if !HAVE_DECL_P_TMPDIR
+/* /tmp should be present on all Unices I guess... */
+#define P_tmpdir "/tmp/"
 #endif
 
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS 0
-#endif
-
-#define EXIT_FILEPERM 1
-#define EXIT_SYNTAXERROR 2
-#define EXIT_VERIFICATION 3
-#define EXIT_INTERRUPT 4
-#define EXIT_OVERFLOW 5
-#define EXIT_ILLEGALCHARS 6
-#define EXIT_INVALIDFILE 7
-#define EXIT_ALLOCATION 8
+#define RANDOMDEV "/dev/random"
 
 #ifndef errno
 extern int errno;
 #endif
 
-#ifndef exit
-extern void exit();
-#endif
-
-#endif /* !_SYSTEM_H */
+#endif /* !LIBHTPMT_SYSTEM_H */

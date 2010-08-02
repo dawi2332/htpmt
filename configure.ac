@@ -57,14 +57,27 @@ AS_IF([test "x$with_openssl" != xno],
 
 LIBMD=
 AS_IF([test "x$with_builtin_libmd" != xno],
-      [AC_SUBST([LIBMD], ["\$(top_builddir)/libmd/libmd.a"])
+      [AC_SUBST([LIBMD], ["\$(top_builddir)/lib/md/libmd.a"])
       AC_DEFINE([HAVE_LIBMD], [1],
 		[Define if you have libmd])
       AC_MSG_NOTICE([Using libmd (built-in) for cryptographic hash functions])])
 
 AM_CONDITIONAL([ENABLE_LIBMD], [test "x$with_builtin_libmd" != xno])
 
-AC_CONFIG_FILES([Makefile build-aux/Makefile src/Makefile contrib/Makefile man/Makefile doc/Makefile libmd/Makefile tests/Makefile]) 
+AC_CONFIG_FILES([
+		 Makefile 
+		build-aux/Makefile 
+		src/Makefile 
+		contrib/Makefile 
+		man/Makefile 
+		doc/Makefile 
+		lib/Makefile 
+		lib/md/Makefile 
+		lib/md/tests/Makefile 
+		lib/htpmt/Makefile
+		tests/Makefile
+]) 
+
 
 
 AC_OUTPUT

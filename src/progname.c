@@ -30,12 +30,25 @@
 
 #include <system.h>
 
-#if HAVE_LIBCRYPTO
-#include <openssl/md5.h>
-#define MD5Init MD5_Init
-#define MD5Update MD5_Update
-#define MD5Final MD5_Final
+const char *program_name = NULL;
+
+void
+set_program_name(const char *argv0)
+{
+#if defined HAVE_GETPROGNAME
+	program_name = getprogname();
+#elif defined HAVE_GETEXECNAME
+	program_name = getexecname();
+#elif defined HAVE___PROGNAME
+#ifndef __progname
+	extern char *__progname;
+#endif /* !__progname */
+	program_name = __progname;
 #else
-#include <libmd/md5.h>
-#endif
-#define MD5_SIZE MD5_DIGEST_LENGTH
+	const char *ptr = strrchr(argv0, '/');
+	const char *basename = (ptr != NULL ? ptr + 1 : argv0);
+
+	program_name = basename;
+#endif /* HAVE_GETPROGNAME */
+}
+

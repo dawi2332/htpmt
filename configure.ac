@@ -4,7 +4,7 @@
 AC_PREREQ(2.61)
 AC_INIT([htpmt], [1.0], [http://code.google.com/p/htpmt/issues/entry], [htpmt], [http://code.google.com/p/htpmt/])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([gnits color-tests])
+AM_INIT_AUTOMAKE([gnits])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADER([config.h])
 
@@ -24,7 +24,7 @@ AC_CHECK_HEADERS([stdlib.h string.h getopt.h gettext.h termios.h termio.h signal
 AC_C_CONST
 AC_TYPE_SIZE_T
 
-AC_CHECK_DECLS([P_tmpdir])
+AC_CHECK_DECLS([[P_tmpdir], [__progname]])
 
 # Checks for library functions.
 AC_FUNC_ERROR_AT_LINE
@@ -57,7 +57,7 @@ AS_IF([test "x$with_openssl" != xno],
 
 LIBMD=
 AS_IF([test "x$with_builtin_libmd" != xno],
-      [AC_SUBST([LIBMD], ["\$(top_build_prefix)libmd/libmd.a"])
+      [AC_SUBST([LIBMD], ["\$(top_builddir)/libmd/libmd.a"])
       AC_DEFINE([HAVE_LIBMD], [1],
 		[Define if you have libmd])
       AC_MSG_NOTICE([Using libmd (built-in) for cryptographic hash functions])])

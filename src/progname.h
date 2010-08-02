@@ -28,14 +28,11 @@
 
 /* $Id$ */
 
-#include <system.h>
+#ifndef _PROGNAME_H
+#define _PROGNAME_H
 
-#if HAVE_LIBCRYPTO
-#include <openssl/md5.h>
-#define MD5Init MD5_Init
-#define MD5Update MD5_Update
-#define MD5Final MD5_Final
-#else
-#include <libmd/md5.h>
-#endif
-#define MD5_SIZE MD5_DIGEST_LENGTH
+extern const char *program_name;
+
+extern void set_program_name(const char *);
+
+#endif /* _PROGNAME_H */

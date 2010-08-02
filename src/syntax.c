@@ -29,13 +29,13 @@
 /* $Id$ */
 
 #include <system.h>
+#include "progname.h"
 
-#if HAVE_LIBCRYPTO
-#include <openssl/md5.h>
-#define MD5Init MD5_Init
-#define MD5Update MD5_Update
-#define MD5Final MD5_Final
-#else
-#include <libmd/md5.h>
-#endif
-#define MD5_SIZE MD5_DIGEST_LENGTH
+void
+syntax(char *s)
+{
+	warnx(s);
+	fprintf(stderr, "Try `%s --help' for more information.\n", program_name);
+	exit(EXIT_SYNTAXERROR);
+}
+

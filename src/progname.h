@@ -28,12 +28,11 @@
 
 /* $Id$ */
 
-#include <system.h>
+#ifndef _PROGNAME_H
+#define _PROGNAME_H
 
-void syntax(char *s)
-{
-	warnx(s);
-	fprintf(stderr, "Try `%s --help' for more information.\n", PROGNAME());
-	exit(EXIT_SYNTAXERROR);
-}
+extern const char *program_name;
 
+extern void set_program_name(const char *);
+
+#endif /* _PROGNAME_H */

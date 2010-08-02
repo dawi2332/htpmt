@@ -86,19 +86,6 @@
 #define P_tmpdir "/tmp/"
 #endif
 
-#ifdef HAVE_GETPROGNAME
-#define PROGNAME() getprogname()
-#else
-#ifdef HAVE_DECL___PROGNAME__
-#define PROGNAME() basename(__progname())
-#elif HAVE_DECL___PROGNAME
-#define PROGNAME() basename(__progname())
-#else
-#warning "Can't figure a way to determine program name at runtime, defaulting to \"htpmt\"."
-#define PROGNAME() return "htpmt"
-#endif /* HAVE_DECL___PROGNAME__ */
-#endif /* !HAVE_GETPROGNAME */
-
 #ifndef EXIT_FAILURE
 #define EXIT_FAILURE 1
 #endif

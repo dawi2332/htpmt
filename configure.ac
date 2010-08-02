@@ -24,7 +24,7 @@ AC_CHECK_HEADERS([stdlib.h string.h getopt.h gettext.h termios.h termio.h signal
 AC_C_CONST
 AC_TYPE_SIZE_T
 
-AC_CHECK_DECLS([[P_tmpdir], [__progname()], [__progname]])
+AC_CHECK_DECLS([[P_tmpdir], [__progname]])
 
 # Checks for library functions.
 AC_FUNC_ERROR_AT_LINE

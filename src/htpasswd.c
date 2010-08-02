@@ -33,6 +33,7 @@
 #include "basic-auth.h"
 #include "fileio.h"
 #include "readpasswd.h"
+#include "progname.h"
 
 void usage(void);
 void version(void);
@@ -87,6 +88,8 @@ main(int argc, char *argv[])
 		{"no-verify",	no_argument,	&flags.verify, 0},
 		{NULL,		0,		NULL,		0}
 	};
+
+	set_program_name(argv[0]);
 
 	while ((c = getopt_long(argc, argv, "cnmdpsbDi", options, NULL)) != -1)
 	{
@@ -145,6 +148,8 @@ main(int argc, char *argv[])
 
 	if (flags.delete)
 	{
+		if (flags.create)
+			syntax("options '-D' and '-c' can't be used at the same time");
 		if (argc < 2)
 			syntax("you must specify a file and a username");
 		delete_from_file(filename, username, NULL);
@@ -245,7 +250,7 @@ main(int argc, char *argv[])
 void
 usage(void)
 {
-	printf("Usage: %s [OPTIONS]... [FILE] USERNAME [PASSWORD]\n", PROGNAME());
+	printf("Usage: %s [OPTIONS]... [FILE] USERNAME [PASSWORD]\n", program_name);
 	printf("\n\
 Options:\n\n\
   -c, --create                create FILE; overwrite FILE if it exists\n\
@@ -272,7 +277,7 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 void
 version(void)
 {
-	printf("%s - %s %s\n", PROGNAME(), PACKAGE_NAME, VERSION_WITH_FLAGS);
+	printf("%s - %s %s\n", program_name, PACKAGE_NAME, VERSION_WITH_FLAGS);
 	printf("\
 Copyright 2008, 2009, 2010 David Winter. All rights reserved.\n\
 This is open source software, see the source for copying conditions.\n");

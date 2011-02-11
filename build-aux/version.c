@@ -52,17 +52,9 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_LIBCRYPTO
-#include <openssl/opensslv.h>
-#endif
-
 int eq(char *a, char *b)
 {
-	int x;
-
-	x = strcmp(a, b);
-
-	switch (x)
+	switch (strcmp(a, b))
 	{
 		case 0:
 			return 1;
@@ -86,14 +78,6 @@ int main(int argc, char *argv[])
 	char buf[1024];
 	char url[1024];
 	char *ptr, *path1, *path2, *path3;
-
-#ifdef HAVE_LIBCRYPTO
-#define major (char) (OPENSSL_VERSION_NUMBER >> 28 & 0xff) + 0x30
-#define minor (char) (OPENSSL_VERSION_NUMBER >> 20 & 0xff) + 0x30
-#define micro (char) (OPENSSL_VERSION_NUMBER >> 12 & 0xff) + 0x30
-#define patch (char) (OPENSSL_VERSION_NUMBER >> 4 & 0xff) + 0x60
-	char openssl_version[20];
-#endif
 
 	if (argc != 2)
 	{
@@ -125,13 +109,6 @@ int main(int argc, char *argv[])
 
 	if (!eq(version, "exported"))
 	{
-#ifdef HAVE_LIBCRYPTO
-		sprintf(openssl_version, "%c.%c.%c%c", major, minor, micro, patch);
-		printf("#define OPENSSL_VERSION_SHORT \"%s\"\n", openssl_version);
-		printf("#define FLAGS \"openssl-%s\"\n", openssl_version);
-#else
-		printf("#define FLAGS\n");
-#endif
 		printf("#define SVN_VERSION \"%s\"\n", version);
 		printf("#define SVN_URL \"%s\"\n", url);
 
@@ -168,7 +145,6 @@ int main(int argc, char *argv[])
 			printf("%s\"\n", VERSION);
 			printf("#define REVISION \"releases/%s@r%s\"\n", path1, version);
 		}
-		printf("#define VERSION_WITH_FLAGS VERSION_LONG/**/\" \"/**/FLAGS \n");
 	}
 	else
 	{

@@ -30,6 +30,7 @@
 
 #include "system.h"
 #include "version.h"
+#include "version-openssl.h"
 #include "basic-auth.h"
 #include "fileio.h"
 #include "readpasswd.h"
@@ -277,7 +278,7 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 void
 version(void)
 {
-	printf("%s - %s %s\n", program_name, PACKAGE_NAME, VERSION_WITH_FLAGS);
+	printf("%s - %s %s %s\n", program_name, PACKAGE_NAME, VERSION_LONG, OPENSSL_VERSION);
 	printf("\
 Copyright 2008, 2009, 2010 David Winter. All rights reserved.\n\
 This is open source software, see the source for copying conditions.\n");

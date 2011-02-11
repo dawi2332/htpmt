@@ -17,11 +17,14 @@ A quick overview of htpmt htpasswd & htdigest features:
  * uses /dev/random for salt generation when available
  * exit codes and command line options conform with Apache
  htpasswd/htdigest
+ * utilizes the built-in libmd library or OpenSSL for SHA-1 and MD5
+  message digests
 
 Requirements for building from a source tarball:
  * compiler tool chain
  * GNU make (or compatible)
  * Bourne-compatible shell
+ * OpenSSL (optional)
 
 If you checked out htpmt from the repository you'll also need:
  * GNU autoconf

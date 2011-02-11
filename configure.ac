@@ -47,7 +47,7 @@ AC_ARG_WITH([builtin-libmd],
 
 LIBCRYPTO=
 AS_IF([test "x$with_openssl" != xno],
-      [AC_CHECK_LIB([crypto], [MD5_Init],
+      [AC_CHECK_LIB([crypto], [SSLeay_version],
 		    [AC_SUBST([LIBCRYPTO], ["-lcrypto"])
 		    AC_DEFINE([HAVE_LIBCRYPTO], [1],
 			      [Define if you have libcrypto])

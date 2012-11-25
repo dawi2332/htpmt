@@ -1,9 +1,9 @@
 HTDIGEST(1)
 ===========
+David Winter <dawi2332@gmail.com>
 :man source: htpmt
 :man manual: htdigest manual
 :man version: {revision}
-:author: David Winter <dawi2332@gmail.com>
 
 NAME
 ----

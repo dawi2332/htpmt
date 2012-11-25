@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,10 @@
 /* $Id$ */
 
 #ifndef _BASIC_AUTH_H
-#define _BASIC_AUTH_H 1
+#define _BASIC_AUTH_H
+
 char *basic_sha1(char*, char*, char*, char*);
 char *basic_crypt(char*, char*, char*, char*);
 char *basic_apr1(char*, char*, char*, char*);
+
 #endif /* !_BASIC_AUTH_H */

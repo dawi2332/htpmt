@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -63,4 +63,3 @@ digest_md5(char *user, char *realm, char *password, char *salt)
 
 	return secret;
 }
-

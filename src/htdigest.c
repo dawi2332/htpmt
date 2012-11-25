@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -81,7 +81,7 @@ main(int argc, char *argv[])
 		{NULL,		0,		NULL,		0}
 	};
 
-	set_program_name(argv[0]);
+	setprogname(argv[0]);
 
 	while ((c = getopt_long(argc, argv, "cnDi", options, NULL)) != -1)
 	{
@@ -203,7 +203,7 @@ main(int argc, char *argv[])
 void
 usage(void)
 {
-	printf("Usage: %s [OPTIONS]... [FILE] REALM USERNAME\n", program_name);
+	printf("Usage: %s [OPTIONS]... [FILE] REALM USERNAME\n", getprogname());
 	printf("\n\
 Options:\n\n\
   -c, --create                create FILE; overwrite FILE if it exists\n\
@@ -223,9 +223,9 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 void
 version(void)
 {
-	printf("%s - %s %s %s\n", program_name, PACKAGE_NAME, VERSION_LONG, OPENSSL_VERSION);
+	printf("%s - %s %s %s\n", getprogname(), PACKAGE_NAME, VERSION_LONG, OPENSSL_VERSION);
 	printf("\
-Copyright 2008, 2009, 2010 David Winter. All rights reserved.\n\
+Copyright 2008, 2009, 2010, 2011, 2012 David Winter. All rights reserved.\n\
 This is open source software, see the source for copying conditions.\n");
 	exit(EXIT_SUCCESS);
 }

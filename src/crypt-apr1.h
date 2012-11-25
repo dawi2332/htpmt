@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,5 +30,7 @@
 
 #ifndef _CRYPT_APR_H
 #define _CRYPT_APR_H
+
 char *crypt_apr1(const char *, const char *);
+
 #endif

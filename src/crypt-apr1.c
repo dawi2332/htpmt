@@ -1,5 +1,6 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter. All rights reserved.
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions

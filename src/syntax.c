@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,11 +31,17 @@
 #include <system.h>
 #include "progname.h"
 
+/*
+ * syntax -- prints the given arguments using vwarnx, prints a message
+ *           to stderr and then exits with EXIT_SYNTAXERROR.
+ */
 void
-syntax(char *s)
+syntax(const char *fmt, ...)
 {
-	warnx(s);
-	fprintf(stderr, "Try `%s --help' for more information.\n", program_name);
+	va_list args;
+	va_start(args, fmt);
+	vwarnx(fmt, args);
+	va_end(args);
+	fprintf(stderr, "Try `%s --help' for more information.\n", getprogname());
 	exit(EXIT_SYNTAXERROR);
 }
-

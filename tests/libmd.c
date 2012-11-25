@@ -52,7 +52,7 @@ FCT_BGN()
 {
 	FCT_QTEST_BGN(libmd__md5)
 	{
-		fct_chk_neq_str(MD5_String(""), "56d41d8cd98f00b204e9800998ecf8427e");
+		fct_chk_eq_str(MD5_String(""), "d41d8cd98f00b204e9800998ecf8427e");
 		fct_chk_eq_str(MD5_String("abc"), "900150983cd24fb0d6963f7d28e17f72");
 		fct_chk_eq_str(MD5_String("message digest"), "f96b697d7cb7938d525a2f31aaf161d0");
 		fct_chk_eq_str(MD5_String("abcdefghijklmnopqrstuvwxyz"), "c3fcd3d76192e4007dfb496cca67e13b");

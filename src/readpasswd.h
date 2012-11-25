@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,9 +28,11 @@
 
 /* $Id$ */
 
-#define F_NOECHO 0x1
 
 #ifndef _READPASSWD_H
 #define _READPASSWD_H
+
+#define F_NOECHO 0x1
 char *readpasswd(const char *, char *, size_t, int);
+
 #endif

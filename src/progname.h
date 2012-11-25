@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,8 +31,7 @@
 #ifndef _PROGNAME_H
 #define _PROGNAME_H
 
-extern const char *program_name;
-
-extern void set_program_name(const char *);
+void setprogname(const char *);
+const char *getprogname(void);
 
 #endif /* _PROGNAME_H */

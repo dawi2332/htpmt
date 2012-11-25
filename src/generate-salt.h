@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,5 +30,7 @@
 
 #ifndef _GENERATE_SALT_H
 #define _GENERATE_SALT_H
+
 char *generate_salt(size_t);
+
 #endif

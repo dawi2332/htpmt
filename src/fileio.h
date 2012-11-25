@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,8 @@
 /* $Id$ */
 
 #ifndef _FILEIO_H
-#define _FILEIO_H 1
+#define _FILEIO_H
+
 #include "system.h"
 
 #define delete_from_file(x,y,z) update_file(x,y,z,NULL)

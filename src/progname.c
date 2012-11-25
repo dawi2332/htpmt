@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,25 +30,23 @@
 
 #include <system.h>
 
-const char *program_name = NULL;
+const char *program_name;
 
+/*
+ * setprogname -- sets the name of the program (for error messages) to
+ *                the last component of its argument.
+ */
 void
-set_program_name(const char *argv0)
+setprogname(const char *progname)
 {
-#if defined HAVE_GETPROGNAME
-	program_name = getprogname();
-#elif defined HAVE_GETEXECNAME
-	program_name = getexecname();
-#elif defined HAVE___PROGNAME
-#ifndef __progname
-	extern char *__progname;
-#endif /* !__progname */
-	program_name = __progname;
-#else
-	const char *ptr = strrchr(argv0, '/');
-	const char *basename = (ptr != NULL ? ptr + 1 : argv0);
-
-	program_name = basename;
-#endif /* HAVE_GETPROGNAME */
+	const char *ptr = strrchr(progname, '/');
+	progname = (ptr != NULL ? ptr + 1 : progname);
 }
 
+/*
+ * getprogrname -- returns the name of the program.
+ */
+const char *getprogname(void)
+{
+	return program_name;
+}

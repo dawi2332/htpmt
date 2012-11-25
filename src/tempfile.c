@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,8 @@
 #endif
 
 /*
- * Creates a new temporary file using mkstemp(3) and returns the opened file.
+ * tempfile -- Creates a new temporary file using mkstemp(3) and
+ *             returns the opened file.
  */
 FILE *
 tempfile()

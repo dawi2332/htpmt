@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,7 @@
 static char *_openssl_version(void)
 {
 	static char version[20];
-	sprintf(version, "openssl-%c.%c.%c%c", openssl_major, openssl_minor, openssl_micro, openssl_patch);
+	sprintf(version, "openssl-%i.%i.%i%c", (int) openssl_major, (int) openssl_minor, (int) openssl_micro, (char) openssl_patch);
 	return version;
 }
 #else

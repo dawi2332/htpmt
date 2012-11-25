@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010 David Winter
+ * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -120,7 +120,7 @@ readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
 	}
 
 	if (len >= bufsize)
-		errx(EXIT_OVERFLOW, "the password must not contain more than %i characters", bufsize-1);
+		errx(EXIT_OVERFLOW, "the password must not contain more than %u characters", (unsigned int) bufsize-1);
 
 	return buffer;
 }

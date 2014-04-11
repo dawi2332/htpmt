@@ -40,7 +40,7 @@ void
 setprogname(const char *progname)
 {
 	const char *ptr = strrchr(progname, '/');
-	progname = (ptr != NULL ? ptr + 1 : progname);
+	program_name = (ptr != NULL ? ptr + 1 : progname);
 }
 
 /*

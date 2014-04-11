@@ -48,25 +48,16 @@
 #include <string.h>
 #include <err.h>
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
 
 int eq(char *a, char *b)
 {
-	switch (strcmp(a, b))
-	{
-		case 0:
-			return 1;
-			break;
-		default:
-			return 0;
-	}
+	return strcmp(a, b) == 0;
 }
 
 void usage()
 {
-	fprintf(stderr, "Usage: version WCPATH");
+	fprintf(stderr, "Usage: version WCPATH\n");
 	exit(1);
 }
 

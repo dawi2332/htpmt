@@ -20,11 +20,12 @@ AC_SEARCH_LIBS([crypt], [crypt])
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([stdlib.h string.h getopt.h gettext.h termios.h termio.h signal.h endian.h machine/endian.h errno.h crypt.h err.h fcntl.h])
+AC_CHECK_HEADERS([fcntl.h float.h inttypes.h memory.h stddef.h stdint.h stdlib.h string.h strings.h termios.h unistd.h getopt.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_TYPE_SIZE_T
+AC_TYPE_MODE_T
 
 AC_CHECK_DECLS([P_tmpdir])
 
@@ -33,7 +34,7 @@ AC_FUNC_ERROR_AT_LINE
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([mkstemp tcsetattr atexit random srandom srandomdev rand srand err errx warn warnx vwarnx])
+AC_CHECK_FUNCS([mkstemp tcsetattr atexit random srandom srandomdev rand srand err errx warn warnx vwarnx memset strchr strrchr])
 
 AC_ARG_WITH([openssl],
 	    [AS_HELP_STRING([--with-openssl],

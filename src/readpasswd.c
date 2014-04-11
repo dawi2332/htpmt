@@ -41,13 +41,30 @@ struct termios	oattr;
 sigset_t	oset;
 
 /*
+ * reset_terminal -- resets interrupts and terminal attributes to whatever
+ *                   it was before calling setup_terminal
+ */
+void
+reset_terminal()
+{
+	if (!isatty(STDIN_FILENO))
+		return;
+
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &oattr);
+	sigprocmask(SIG_SETMASK, &oset, NULL);
+}
+
+/*
  * setup_terminal -- masks interrupts and changes terminal attributes
  */
 void
-setup_terminal(void)
+setup_terminal(int flags)
 {
 	struct termios	attr;
 	sigset_t	set;
+
+	if (!isatty(STDIN_FILENO) || !(flags & F_NOECHO))
+		return;
 
 	sigemptyset(&set);
 	sigaddset(&set, SIGINT);
@@ -58,17 +75,7 @@ setup_terminal(void)
 	tcgetattr(STDIN_FILENO, &oattr);
 	attr.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL | ICANON);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &attr);
-}
-
-/*
- * reset_terminal -- resets interrupts and terminal attributes to whatever
- *                   it was before calling setup_terminal
- */
-void
-reset_terminal(void)
-{
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &oattr);
-	sigprocmask(SIG_SETMASK, &oset, NULL);
+	atexit(reset_terminal);
 }
 
 /*
@@ -85,15 +92,8 @@ readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
 	has_prompt = ((prompt != NULL) && (strlen(prompt) > 0) ? 1 : 0);
 	memset(buffer, 0, sizeof(buffer));
 
-	if (isatty(STDIN_FILENO))
-	{
-		if (flags & F_NOECHO)
-		{
-			setup_terminal();
-			atexit(reset_terminal);
-		}
+	setup_terminal(flags);
 
-	}
 
 	if (has_prompt)
 		fputs(prompt, stdout);
@@ -113,11 +113,7 @@ readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
 	if (has_prompt)
 		putchar('\n');
 
-	if (isatty(STDIN_FILENO))
-	{
-		if (flags & F_NOECHO)
-			reset_terminal();
-	}
+	reset_terminal();
 
 	if (len >= bufsize)
 		errx(EXIT_OVERFLOW, "the password must not contain more than %u characters", (unsigned int) bufsize-1);

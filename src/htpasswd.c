@@ -147,16 +147,6 @@ main(int argc, char *argv[])
 	if (flags.help)
 		usage();
 
-	if (flags.delete)
-	{
-		if (flags.create)
-			syntax("options '-D' and '-c' can't be used at the same time");
-		if (argc < 2)
-			syntax("you must specify a file and a username");
-		delete_from_file(filename, username, NULL);
-		exit(EXIT_SUCCESS);
-	}
-
 	if (!flags.to_stdout)
 	{
 		if (argc < 2)
@@ -186,6 +176,17 @@ main(int argc, char *argv[])
 
 	if (strchr(username, ':') != NULL)
 		errx(EXIT_ILLEGALCHARS, "the username must not contain the character ':'");
+
+	if (flags.delete)
+	{
+		if (flags.create)
+			syntax("options '-D' and '-c' can't be used at the same time");
+		if (argc < 2)
+			syntax("you must specify a file and a username");
+
+		delete_from_file(filename, username, NULL);
+		exit(EXIT_SUCCESS);
+	}
 
 	if (flags.force_plain && flags.warn)
 		warnx("the use of the `-p' option is discouraged since anybody with access to the password file can read (and possibly abuse) it. Use only when REALLY needed.");

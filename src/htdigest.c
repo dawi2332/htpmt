@@ -116,18 +116,11 @@ main(int argc, char *argv[])
 	if (flags.version)
 		version();
 
-	if (flags.delete)
-	{
-		if (argc < 2)
-			syntax("you must specify a file and a username");
-		delete_from_file(argv[0], argv[2], argv[1]);
-		exit(EXIT_SUCCESS);
-	}
-
 	if (!flags.to_stdout)
 	{
 		if (argc < 3)
 			syntax("you must specify a file, a realm and a username");
+
 		filename = argv[0];
 		realm = argv[1];
 		username = argv[2];
@@ -153,6 +146,15 @@ main(int argc, char *argv[])
 	if (strchr(realm, ':') != NULL)
 		errx(EXIT_ILLEGALCHARS, "the realm must not contain the character ':'");
 
+	if (flags.delete)
+	{
+		if (argc < 3)
+			syntax("you must specify a file, a realm and a username");
+		if (flags.create)
+			syntax("options '-D' and '-c' can't be used at the same time");
+		delete_from_file(filename, username, realm);
+		exit(EXIT_SUCCESS);
+	}
 
 	if (!flags.from_stdin)
 	{

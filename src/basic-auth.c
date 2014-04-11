@@ -93,7 +93,7 @@ basic_sha1(char *user, char *realm, char *password, char *salt)
 {
 	SHA1_CTX	mdctx;
 	unsigned char	md[SHA_DIGEST_LENGTH];
-	char tmp[28];
+	char		tmp[28];
 	static char	secret[34];
 	
 	SHA1_Init(&mdctx);

@@ -21,14 +21,14 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
 
 /* $Id$ */
 
-#include <system.h>
+#include "system.h"
 #include <fcntl.h>
 
 #ifdef HAVE_RANDOM
@@ -46,9 +46,7 @@ static unsigned const char itoa64_s[] =
 /*
  * seed_random -- seed random(3) or rand(3) with entropy from RANDOMDEV
  */
-void
-seed_random(void)
-{
+void seed_random(void) {
 #ifdef HAVE_RANDOM
 	unsigned long seed;
 #else
@@ -59,16 +57,12 @@ seed_random(void)
 
 	const size_t len = sizeof(seed);
 	int fd = open(RANDOMDEV, O_RDONLY, 0);
-	if (fd > 0)
-	{
-		if (read(fd, (void *) &seed, len) != (size_t) len)
-		{
-			close(fd);	
+	if (fd > 0) {
+		if (read(fd, (void *) &seed, len) != (size_t) len) {
+			close(fd);
 			errx(EXIT_FAILURE, "reading from '%s' doesn't yield enough entropy to seed the pseudo-random number generator", RANDOMDEV);
 		}
-	}
-	else
-	{
+	} else {
 		errx(EXIT_FAILURE, "failed to seed the pseudo-random number generator with '%s'", RANDOMDEV);
 	}
 
@@ -86,17 +80,14 @@ seed_random(void)
 }
 
 
-/* 
+/*
  * generate_salt -- generates a random string, up to 32 characters long.
  */
-char *
-generate_salt(size_t length)
-{
+char * generate_salt(size_t length) {
 	static char salt[33];
 	int i;
 
-	if (!rand_seeded)
-	{
+	if (!rand_seeded) {
 #if defined HAVE_SRANDOMDEV  & SRANDOM
 		srandomdev();
 #else
@@ -105,17 +96,16 @@ generate_salt(size_t length)
 		rand_seeded = 1;
 	}
 
-	for (i = 0; i < 32; i++)
-	{
+	for (i = 0; i < 32; i++) {
 		salt[i] = itoa64_s[RAND() & 0x3f];
 	}
-	
+
 
 	if (0 < length < 32)
 		salt[length+1] = '\0';
 	else
 		salt[32] = '\0';
 
-	
+
 	return salt;
 }

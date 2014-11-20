@@ -21,7 +21,7 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
@@ -35,13 +35,12 @@
 #include "fileio.h"
 #include "readpasswd.h"
 #include "progname.h"
+#include "syntax.h"
 
 void usage(void);
 void version(void);
 
-int
-main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 	char *secret = NULL;
 	char *filename;
 	char *username;
@@ -51,8 +50,7 @@ main(int argc, char *argv[])
 	char buf1[MAX_STRING_LEN];
 	char c;
 
-	static struct
-	{
+	static struct {
 		int	verbose;
 		int	version;
 		int	help;
@@ -67,13 +65,11 @@ main(int argc, char *argv[])
 		int	warn;
 		int	from_stdin;
 		int	verify;
-	} flags =
-	{
+	} flags = {
 		0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1
 	};
 
-	const struct option options[] =
-	{
+	const struct option options[] = {
 		{"create",	no_argument,	NULL,		'c'},
 		{"to-stdout",	no_argument,	NULL,		'n'},
 		{"force-md5", 	no_argument,	NULL,		'm'},
@@ -92,10 +88,8 @@ main(int argc, char *argv[])
 
 	setprogname(argv[0]);
 
-	while ((c = getopt_long(argc, argv, "cnmdpsbDi", options, NULL)) != -1)
-	{
-		switch (c)
-		{
+	while ((c = getopt_long(argc, argv, "cnmdpsbDi", options, NULL)) != -1) {
+		switch (c) {
 			case 'c':
 				flags.create = 1;
 				flags.to_stdout = 0;
@@ -147,20 +141,17 @@ main(int argc, char *argv[])
 	if (flags.help)
 		usage();
 
-	if (!flags.to_stdout)
-	{
+	if (!flags.to_stdout) {
 		if (argc < 2)
 			syntax("you must specify a file and a username");
-		if (flags.from_cmdline && argc < 3) 
+		if (flags.from_cmdline && argc < 3)
 			syntax("you must specify a file, a username and a password");
 		else
 			password = argv[2];
 
 		filename = argv[0];
 		username = argv[1];
-	}
-	else
-	{
+	} else {
 		if (argc < 1)
 			syntax("you must specify a username");
 		if (flags.from_cmdline && argc < 2)
@@ -170,15 +161,14 @@ main(int argc, char *argv[])
 
 		username = argv[0];
 	}
-	
+
 	if (strlen(username) > MAX_STRING_LEN-1)
 		errx(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN-1);
 
 	if (strchr(username, ':') != NULL)
 		errx(EXIT_ILLEGALCHARS, "the username must not contain the character ':'");
 
-	if (flags.delete)
-	{
+	if (flags.delete) {
 		if (flags.create)
 			syntax("options '-D' and '-c' can't be used at the same time");
 		if (argc < 2)
@@ -197,14 +187,11 @@ main(int argc, char *argv[])
 	if (flags.from_cmdline && flags.warn)
 		warnx("the use of the `-b' option is discouraged since the unencrypted password will be visible on the command line and in the process table.");
 
-	if (!flags.from_cmdline && !flags.from_stdin)
-	{
+	if (!flags.from_cmdline && !flags.from_stdin) {
 		password = readpasswd("Password:", buf, MAX_STRING_LEN, F_NOECHO);
-		if (flags.verify)
-		{
-		       	password = readpasswd("Verify password:", buf1, MAX_STRING_LEN, F_NOECHO);
-			if (strncmp(buf, buf1, MAX_STRING_LEN) != 0)
-			{
+		if (flags.verify) {
+                        password = readpasswd("Verify password:", buf1, MAX_STRING_LEN, F_NOECHO);
+			if (strncmp(buf, buf1, MAX_STRING_LEN) != 0) {
 				memset(buf, 0, MAX_STRING_LEN);
 				errx(EXIT_VERIFICATION, "password mismatch");
 			}
@@ -229,29 +216,26 @@ main(int argc, char *argv[])
 	if (strlen(secret) + strlen(username) + 1 > MAX_STRING_LEN-1)
 		errx(EXIT_OVERFLOW, "resultant user record must not exceed %i characters", MAX_STRING_LEN-1);
 
-	if (!flags.to_stdout)
-	{
+	if (!flags.to_stdout) {
 		if (flags.create)
 			create_file(filename, username, NULL, secret);
 		else
 			update_file(filename, username, NULL, secret);
-	}
-	else
+	} else {
 		printf("%s:%s\n", username, secret);
+        }
 
 	/* zero everything */
-	memset(password, 0, sizeof(password));
+	memset(password, 0, MAX_STRING_LEN);
 	memset(buf, 0, sizeof(buf));
-	memset(username, 0, sizeof(username));
-	memset(secret, 0, sizeof(secret));
+	memset(username, 0, MAX_STRING_LEN);
+	memset(secret, 0, strlen(secret));
 
 	return EXIT_SUCCESS;
 }
 
 
-void
-usage(void)
-{
+void usage(void) {
 	printf("Usage: %s [OPTIONS]... [FILE] USERNAME [PASSWORD]\n", getprogname());
 	printf("\n\
 Options:\n\n\
@@ -276,9 +260,7 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 	exit(EXIT_SUCCESS);
 }
 
-void
-version(void)
-{
+void version(void) {
 	printf("%s - %s %s %s\n", getprogname(), PACKAGE_NAME, VERSION_LONG, OPENSSL_VERSION);
 	printf("\
 Copyright 2008, 2009, 2010, 2011, 2012 David Winter. All rights reserved.\n\

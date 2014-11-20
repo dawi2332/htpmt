@@ -21,7 +21,7 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
@@ -32,25 +32,20 @@
 #include "fileio.h"
 #include "tempfile.h"
 
-void *
-copy_file(FILE *in, FILE *out)
-{
+void copy_file(FILE *in, FILE *out) {
 	char buf[BUFSIZ];
 	rewind(in);
 	rewind(out);
 
-	while (fgets(buf, BUFSIZ, in) != NULL)
-	{
+	while (fgets(buf, BUFSIZ, in) != NULL) {
 		fputs(buf, out);
 	}
 }
 
-/* 
+/*
  * create_file -- creates a new file with the given data
  */
-void
-create_file(char *filename, char *username, char *realm, char *password)
-{
+void create_file(char *filename, char *username, char *realm, char *password) {
 	FILE *out;
 	struct stat sb;
 
@@ -67,9 +62,7 @@ create_file(char *filename, char *username, char *realm, char *password)
 /*
  * update_file -- updates or adds a password
  */
-void
-update_file(char *filename, char *username, char *realm, char *password)
-{
+void update_file(char *filename, char *username, char *realm, char *password) {
 	FILE *in, *out;
 	struct stat sb;
 	char buf[MAX_STRING_LEN * 3];
@@ -83,13 +76,11 @@ update_file(char *filename, char *username, char *realm, char *password)
 		err(EXIT_INVALIDFILE, "cannot not open \"%s\" for reading",
 			filename);
 
-	while (fgets(buf, sizeof(buf), in) != NULL)
-	{
+	while (fgets(buf, sizeof(buf), in) != NULL) {
 		/* Don't touch comment lines or empty lines, ignore duplicate
-		 * records
-		 */
-		if (buf[0] == '#' || buf[0] == '\n'|| found > 0)
-		{
+                 * records
+                 */
+		if (buf[0] == '#' || buf[0] == '\n'|| found > 0) {
 			fputs(buf, out);
 			continue;
 		}
@@ -98,40 +89,30 @@ update_file(char *filename, char *username, char *realm, char *password)
 		field2 = strtok(NULL, ":");
 		field3 = strtok(NULL, ":");
 
-		if (strncmp(username, field1, MAX_STRING_LEN) == 0 &&
-			((field3 == NULL && realm == NULL) ||
-			 ((field3 != NULL && realm != NULL) &&
-			  (strncmp(realm, field2, MAX_STRING_LEN) == 0))))
-		{
-			if (password != NULL)
-			{
+		if (strncmp(username, field1, MAX_STRING_LEN) == 0 && ((field3 == NULL && realm == NULL) || ((field3 != NULL && realm != NULL) && (strncmp(realm, field2, MAX_STRING_LEN) == 0)))) {
+			if (password != NULL) {
 				fprintf(out, "%s:%s\n", username, password);
 				found++;
-			}
-			else
-			{
-				if (realm == NULL)
+			} else {
+				if (realm == NULL) {
 					fprintf(stderr, "Deleted record for user %s\n", username);
-				else
-					fprintf(stderr, "Deleted record for user %s in realm %s\n", username, realm);
-
+                                } else {
+                                        fprintf(stderr, "Deleted record for user %s in realm %s\n", username, realm);
+                                }
 			}
-
-		}
-		else
-		{
+		} else {
 			fputs(buf, out);
 		}
 	}
 
-	if (found == 0 && password != NULL)
-	{
+	if (found == 0 && password != NULL) {
 		fprintf(out, "%s:%s\n", username, password);
 		fprintf(stderr, "Added record for user %s\n", username);
 	}
 
-	if (found > 0)
+	if (found > 0) {
 		fprintf(stderr, "Updated record for user %s\n", username);
+        }
 
 	fclose(in);
 	in = fopen(filename, "w");

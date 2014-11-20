@@ -21,7 +21,7 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
 
@@ -33,9 +33,7 @@
 static unsigned char itoa64[] =         /* 0 ... 63 => ascii - 64 */
         "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-void
-to64(char *s, unsigned long v, int n)
-{
+void to64(char *s, unsigned long v, int n) {
         while (--n >= 0) {
                 *s++ = itoa64[v&0x3f];
                 v >>= 6;
@@ -51,15 +49,13 @@ to64(char *s, unsigned long v, int n)
  * ----------------------------------------------------------------------------
  */
 
-char *
-crypt_apr1(const char *pw, const char *salt)
-{
+char * crypt_apr1(const char *pw, const char *salt) {
 	static char	*magic = "$apr1$";	/*
-					 * This string is magic for
-					 * this algorithm.  Having
-					 * it this way, we can get
-					 * get better later on
-					 */
+						 * This string is magic for
+						 * this algorithm.  Having
+						 * it this way, we can get
+						 * get better later on
+						 */
 	static char     passwd[120], *p;
 	static const char *sp,*ep;
 	unsigned char	final[MD5_SIZE];
@@ -105,11 +101,12 @@ crypt_apr1(const char *pw, const char *salt)
 	memset(final,0,sizeof final);
 
 	/* Then something really weird... */
-	for (i = strlen(pw); i ; i >>= 1)
+	for (i = strlen(pw); i ; i >>= 1) {
 		if(i&1)
-		    MD5Update(&ctx, (unsigned char*)  final,  1);
+			MD5Update(&ctx, (unsigned char*)  final,  1);
 		else
-		    MD5Update(&ctx, (unsigned char*)  pw,  1);
+			MD5Update(&ctx, (unsigned char*)  pw,  1);
+	}
 
 	/* Now make the output string */
 	strcpy(passwd,magic);

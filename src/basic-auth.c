@@ -21,14 +21,14 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
 
 /* $Id$ */
 
-#include <system.h>
+#include "system.h"
 #include "sha.h"
 #include "md5.h"
 #include "generate-salt.h"
@@ -41,14 +41,11 @@
 static unsigned const char itob64_s[] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-void
-itob64(char *in, char *out, size_t length)
-{
+void itob64(char *in, char *out, size_t length) {
 	char		*ptr = out;
 	int		i;
 
-	for (i = 0; i < length -2; i += 3)
-	{
+	for (i = 0; i < length -2; i += 3) {
 		*ptr++ = itob64_s[(in[i] >> 2) & 0x3f];
 		*ptr++ = itob64_s[((in[i] & 0x3) << 4) |
 			((in[i + 1] & 0xf0) >> 4)];
@@ -57,17 +54,13 @@ itob64(char *in, char *out, size_t length)
 		*ptr++ = itob64_s[in[i + 2] & 0x3f];
 	}
 
-	if (i < length)
-	{
+	if (i < length) {
 		*ptr++ = itob64_s[(in[i] >> 2) & 0x3f];
 
-		if (i == (length - 1))
-		{
+		if (i == (length - 1)) {
 			*ptr++ = itob64_s[((in[i] & 0x3) << 4)];
 			*ptr++ = '=';
-		}
-		else
-		{
+		} else {
 			*ptr++ = itob64_s[((in[i] & 0x3) << 4) |
 				((in[i + 1] & 0xf0) >> 4)];
 			*ptr++ = itob64_s[((in[i + 1] & 0xf) << 2)];
@@ -77,9 +70,7 @@ itob64(char *in, char *out, size_t length)
 	*ptr++ = '\0';
 }
 
-char *
-basic_crypt(char *user, char *realm, char *password, char* salt)
-{
+char * basic_crypt(char *user, char *realm, char *password, char* salt) {
 	static char secret[14];
 	if (salt == NULL)
 		salt = generate_salt(2);
@@ -88,20 +79,18 @@ basic_crypt(char *user, char *realm, char *password, char* salt)
 	return secret;
 }
 
-char *
-basic_sha1(char *user, char *realm, char *password, char *salt)
-{
+char * basic_sha1(char *user, char *realm, char *password, char *salt) {
 	SHA1_CTX	mdctx;
 	unsigned char	md[SHA_DIGEST_LENGTH];
 	char		tmp[28];
 	static char	secret[34];
-	
+
 	SHA1_Init(&mdctx);
 	SHA1_Update(&mdctx, (unsigned char*) password, strlen(password));
 	SHA1_Final(md, &mdctx);
 
 	itob64((char *) md, tmp, SHA_DIGEST_LENGTH);
-	
+
 	memset(md, '\0', SHA_DIGEST_LENGTH);
 
 	sprintf(secret, "{SHA}%s", tmp);
@@ -111,9 +100,7 @@ basic_sha1(char *user, char *realm, char *password, char *salt)
 	return secret;
 }
 
-char *
-basic_apr1(char *user, char *realm, char *password, char *salt)
-{
+char * basic_apr1(char *user, char *realm, char *password, char *salt) {
 	static char secret[120];
 	if (salt == NULL)
 		salt = generate_salt(8);

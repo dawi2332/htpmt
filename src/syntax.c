@@ -21,23 +21,21 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
 
 /* $Id$ */
 
-#include <system.h>
+#include "system.h"
 #include "progname.h"
 
 /*
  * syntax -- prints the given arguments using vwarnx, prints a message
  *           to stderr and then exits with EXIT_SYNTAXERROR.
  */
-void
-syntax(const char *fmt, ...)
-{
+void syntax(const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 	vwarnx(fmt, args);

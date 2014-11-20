@@ -1,11 +1,8 @@
-#include <system.h>
 #include "fct.h"
 #include <libmd/md5.h>
 #include <libmd/sha.h>
 
-static char *
-MD5_String(char *string)
-{
+static char * MD5_String(char *string) {
 	static char buf[33];
 	char *ptr;
 	unsigned char digest[16];
@@ -13,21 +10,18 @@ MD5_String(char *string)
 
 	MD5_CTX context;
 	MD5Init(&context);
-	MD5Update(&context, string, strlen(string));
+	MD5Update(&context, (const unsigned char *) string, strlen(string));
 	MD5Final(digest, &context);
 
 	ptr = buf;
-	for (i = 0; i < 16; i++)
-	{
+	for (i = 0; i < 16; i++) {
 		sprintf(ptr, "%02x", digest[i]);
 		ptr += 2;
 	}
 	return buf;
 }
 
-static char *
-SHA1_String(char *string)
-{
+static char * SHA1_String(char *string) {
 	static char buf[41];
 	char *ptr;
 	unsigned char digest[21];
@@ -35,12 +29,11 @@ SHA1_String(char *string)
 
 	SHA_CTX context;
 	SHA1_Init(&context);
-	SHA1_Update(&context, string, strlen(string));
+	SHA1_Update(&context, (const unsigned char *) string, strlen(string));
 	SHA1_Final(digest, &context);
 
 	ptr = buf;
-	for (i = 0; i < 20; i++)
-	{
+	for (i = 0; i < 20; i++) {
 		sprintf(ptr, "%02x", digest[i]);
 		ptr += 2;
 	}
@@ -48,10 +41,8 @@ SHA1_String(char *string)
 }
 
 
-FCT_BGN()
-{
-	FCT_QTEST_BGN(libmd__md5)
-	{
+FCT_BGN() {
+	FCT_QTEST_BGN(libmd__md5) {
 		fct_chk_eq_str(MD5_String(""), "d41d8cd98f00b204e9800998ecf8427e");
 		fct_chk_eq_str(MD5_String("abc"), "900150983cd24fb0d6963f7d28e17f72");
 		fct_chk_eq_str(MD5_String("message digest"), "f96b697d7cb7938d525a2f31aaf161d0");
@@ -61,8 +52,7 @@ FCT_BGN()
 	}
 	FCT_QTEST_END();
 
-	FCT_QTEST_BGN(libmd__sha1)
-	{
+	FCT_QTEST_BGN(libmd__sha1) {
 		fct_chk_eq_str(SHA1_String(""), "da39a3ee5e6b4b0d3255bfef95601890afd80709");
 		fct_chk_eq_str(SHA1_String("abc"), "a9993e364706816aba3e25717850c26c9cd0d89d");
 		fct_chk_eq_str(SHA1_String("message digest"), "c12252ceda8be8994d5fa0290a47231c1d16aae3");

@@ -21,14 +21,14 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
 
 /* $Id$ */
 
-#include <system.h>
+#include "system.h"
 #include "readpasswd.h"
 #ifdef HAVE_SIGNAL_H
 #include	<signal.h>
@@ -44,9 +44,7 @@ sigset_t	oset;
  * reset_terminal -- resets interrupts and terminal attributes to whatever
  *                   it was before calling setup_terminal
  */
-void
-reset_terminal()
-{
+void reset_terminal() {
 	if (!isatty(STDIN_FILENO))
 		return;
 
@@ -57,9 +55,7 @@ reset_terminal()
 /*
  * setup_terminal -- masks interrupts and changes terminal attributes
  */
-void
-setup_terminal(int flags)
-{
+void setup_terminal(int flags) {
 	struct termios	attr;
 	sigset_t	set;
 
@@ -81,16 +77,14 @@ setup_terminal(int flags)
 /*
  * readpasswd -- reads bufsize-1 chars from stdin or tty
  */
-char *
-readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
-{
+char * readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags) {
 	size_t		len;
 	char		*ptr;
 	char		c;
 	int		has_prompt;
 
 	has_prompt = ((prompt != NULL) && (strlen(prompt) > 0) ? 1 : 0);
-	memset(buffer, 0, sizeof(buffer));
+	memset(buffer, 0, bufsize);
 
 	setup_terminal(flags);
 
@@ -99,12 +93,10 @@ readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags)
 		fputs(prompt, stdout);
 
 	len = 0;
-	while (((c = getchar()) != EOF) && (c != '\n'))
-	{
+	while (((c = getchar()) != EOF) && (c != '\n')) {
 		buffer[len] = c;
 
-		if (++len >= bufsize)
-		{
+		if (++len >= bufsize) {
 			break;
 		}
 	}

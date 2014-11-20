@@ -21,7 +21,7 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
@@ -38,9 +38,7 @@
  * tempfile -- Creates a new temporary file using mkstemp(3) and
  *             returns the opened file.
  */
-FILE *
-tempfile()
-{
+FILE * tempfile() {
 	FILE *file;
 	int fd;
 	char temp[] = P_tmpdir/**/TMPFILE_TEMPLATE;
@@ -49,8 +47,7 @@ tempfile()
 	fd = mkstemp(temp);
 
 
-	if ((fd == -1) || (file = fdopen(fd, "r+")) == NULL)
-	{
+	if ((fd == -1) || (file = fdopen(fd, "r+")) == NULL) {
 		close(fd);
 		err(EXIT_FAILURE, "cannot create temporary file in %s", P_tmpdir);
 	}

@@ -26,11 +26,10 @@
  *
  */
 
-/* $Id$ */
+/* $Id: syntax.c 104 2012-11-25 08:05:10Z dawi2332 $ */
 
-#ifndef _DIGEST_AUTH_H
-#define _DIGEST_AUTH_H
-
-char *digest_md5(char*, char*, char*, char*);
-
-#endif /* !_DIGEST_AUTH_H */
+/*
+ * syntax -- prints the given arguments using vwarnx, prints a message
+ *           to stderr and then exits with EXIT_SYNTAXERROR.
+ */
+void syntax(const char *fmt, ...);

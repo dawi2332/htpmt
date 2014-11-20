@@ -21,7 +21,7 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
@@ -32,39 +32,39 @@
 #define _SYSTEM_H
 
 #include <config.h>
-#include <stdio.h> 
-#if HAVE_SYS_TYPES_H 
-#	include <sys/types.h> 
+#include <stdio.h>
+#if HAVE_SYS_TYPES_H
+#	include <sys/types.h>
 #endif  /* HAVE_SYS_TYPES_H */
-#if HAVE_SYS_STAT_H 
-#	include <sys/stat.h> 
+#if HAVE_SYS_STAT_H
+#	include <sys/stat.h>
 #endif  /* HAVE_SYS_STAT_H */
-#if STDC_HEADERS 
-#	include <stdlib.h> 
-#	include <stddef.h> 
+#if STDC_HEADERS
+#	include <stdlib.h>
+#	include <stddef.h>
 #	include <stdarg.h>
-#else 
-#	ifdef HAVE_STDLIB_H 
-#	include <stdlib.h> 
+#else
+#	ifdef HAVE_STDLIB_H
+#	include <stdlib.h>
 #	endif  /* HAVE_STDLIB_H */
 #endif  /* STDC_HEADERS */
-#if HAVE_STRING_H 
-#	if !defined STDC_HEADERS && defined HAVE_MEMORY_H 
-#		include <memory.h> 
+#if HAVE_STRING_H
+#	if !defined STDC_HEADERS && defined HAVE_MEMORY_H
+#		include <memory.h>
 #	endif  /* !STDC_HEADERS && HAVE_MEMORY_H */
-#	include <string.h> 
+#	include <string.h>
 #endif  /* HAVE_STRING_H */
-#if HAVE_STRINGS_H 
-#	include <strings.h> 
+#if HAVE_STRINGS_H
+#	include <strings.h>
 #endif  /* HAVE_STRINGS_H */
-#if HAVE_INTTYPES_H 
-#	include <inttypes.h> 
+#if HAVE_INTTYPES_H
+#	include <inttypes.h>
 #endif /* HAVE_INTTYPES_H */
-#ifdef HAVE_STDINT_H 
-#	include <stdint.h> 
+#ifdef HAVE_STDINT_H
+#	include <stdint.h>
 #endif  /* HAVE_STDINT_H */
-#if HAVE_UNISTD_H 
-#	include <unistd.h> 
+#if HAVE_UNISTD_H
+#	include <unistd.h>
 #endif /* HAVE_UNISTD_H */
 #ifdef HAVE_GETOPT_H
 #	include <getopt.h>
@@ -77,6 +77,9 @@
 #endif
 #ifdef HAVE_ERR_H
 #	include <err.h>
+#endif
+#ifdef HAVE_SIGNAL_H
+#	include <signal.h>
 #endif
 
 #define MAX_STRING_LEN 256

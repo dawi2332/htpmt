@@ -21,7 +21,7 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
@@ -31,9 +31,7 @@
 #include "system.h"
 #include "md5.h"
 
-char *
-digest_md5(char *user, char *realm, char *password, char *salt)
-{
+char * digest_md5(char *user, char *realm, char *password, char *salt) {
 	int		i;
 	char		tmp[MD5_DIGEST_LENGTH * 3];
 	MD5_CTX		ctx;
@@ -50,13 +48,12 @@ digest_md5(char *user, char *realm, char *password, char *salt)
 	MD5Final(md, &ctx);
 
 	ptr = buf;
-	
-	for (i = 0; i < MD5_DIGEST_LENGTH; i++)
-	{
+
+	for (i = 0; i < MD5_DIGEST_LENGTH; i++) {
 		sprintf((char*) ptr, "%02x", md[i]);
 		ptr += 2;
 	}
-	
+
 	memset(tmp, '\0', sizeof(tmp));
 	sprintf(secret, "%s:%s", realm, buf);
 	memset(buf, '\0', sizeof(buf));

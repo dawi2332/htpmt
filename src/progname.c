@@ -21,14 +21,14 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
 
 /* $Id$ */
 
-#include <system.h>
+#include "system.h"
 
 const char *program_name;
 
@@ -36,9 +36,7 @@ const char *program_name;
  * setprogname -- sets the name of the program (for error messages) to
  *                the last component of its argument.
  */
-void
-setprogname(const char *progname)
-{
+void setprogname(const char *progname) {
 	const char *ptr = strrchr(progname, '/');
 	program_name = (ptr != NULL ? ptr + 1 : progname);
 }
@@ -46,7 +44,6 @@ setprogname(const char *progname)
 /*
  * getprogrname -- returns the name of the program.
  */
-const char *getprogname(void)
-{
+const char *getprogname(void) {
 	return program_name;
 }

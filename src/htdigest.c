@@ -21,7 +21,7 @@
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
  * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
  */
@@ -35,13 +35,12 @@
 #include "fileio.h"
 #include "readpasswd.h"
 #include "progname.h"
+#include "syntax.h"
 
 void usage(void);
 void version(void);
 
-int
-main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 	char *secret = NULL;
 	char *filename;
 	char *username;
@@ -52,8 +51,7 @@ main(int argc, char *argv[])
 	char buf1[MAX_STRING_LEN];
 	char c;
 
-	static struct
-	{
+	static struct {
 		int	verbose;
 		int	version;
 		int	help;
@@ -63,13 +61,11 @@ main(int argc, char *argv[])
 		int	runforever;
 		int	from_stdin;
 		int	verify;
-	} flags =
-	{
+	} flags = {
 		0, 0, 0, 0, 0, 0, 1, 0, 1
 	};
 
-	const struct option options[] =
-	{
+	const struct option options[] = {
 		{"create",	no_argument,	NULL,		'c'},
 		{"to-stdout",	no_argument,	NULL,		'n'},
 		{"delete",	no_argument,	NULL,		'D'},
@@ -83,10 +79,8 @@ main(int argc, char *argv[])
 
 	setprogname(argv[0]);
 
-	while ((c = getopt_long(argc, argv, "cnDi", options, NULL)) != -1)
-	{
-		switch (c)
-		{
+	while ((c = getopt_long(argc, argv, "cnDi", options, NULL)) != -1) {
+		switch (c) {
 			case 'c':
 				flags.create = 1;
 				flags.to_stdout = 0;
@@ -116,24 +110,21 @@ main(int argc, char *argv[])
 	if (flags.version)
 		version();
 
-	if (!flags.to_stdout)
-	{
+	if (!flags.to_stdout) {
 		if (argc < 3)
 			syntax("you must specify a file, a realm and a username");
 
 		filename = argv[0];
 		realm = argv[1];
 		username = argv[2];
-	}
-	else
-	{
+	} else {
 		if (argc < 2)
 			syntax("you must specify a username and a realm");
 
 		realm = argv[0];
 		username = argv[1];
 	}
-	
+
 	if (strlen(username) > MAX_STRING_LEN-1)
 		errx(EXIT_OVERFLOW, "the username must not contain more than %i characters", MAX_STRING_LEN-1);
 
@@ -146,8 +137,7 @@ main(int argc, char *argv[])
 	if (strchr(realm, ':') != NULL)
 		errx(EXIT_ILLEGALCHARS, "the realm must not contain the character ':'");
 
-	if (flags.delete)
-	{
+	if (flags.delete) {
 		if (argc < 3)
 			syntax("you must specify a file, a realm and a username");
 		if (flags.create)
@@ -156,14 +146,11 @@ main(int argc, char *argv[])
 		exit(EXIT_SUCCESS);
 	}
 
-	if (!flags.from_stdin)
-	{
+	if (!flags.from_stdin) {
 		password = readpasswd("Password:", buf, MAX_STRING_LEN, F_NOECHO);
-		if (flags.verify)
-		{
-		       	password = readpasswd("Verify password:", buf1, MAX_STRING_LEN, F_NOECHO);
-			if (strncmp(buf, buf1, MAX_STRING_LEN) != 0)
-			{
+		if (flags.verify) {
+			password = readpasswd("Verify password:", buf1, MAX_STRING_LEN, F_NOECHO);
+			if (strncmp(buf, buf1, MAX_STRING_LEN) != 0) {
 				memset(buf, 0, MAX_STRING_LEN);
 				errx(EXIT_VERIFICATION, "password mismatch");
 			}
@@ -181,8 +168,7 @@ main(int argc, char *argv[])
 	if (strlen(secret) + strlen(username) + 1 > MAX_STRING_LEN-1)
 		errx(EXIT_OVERFLOW, "resultant user record must not exceed %i characters", MAX_STRING_LEN-1);
 
-	if (!flags.to_stdout)
-	{
+	if (!flags.to_stdout) {
 		if (flags.create)
 			create_file(filename, username, realm, secret);
 		else
@@ -193,18 +179,16 @@ main(int argc, char *argv[])
 
 	/* zero everything */
 	memset(buf, 0, sizeof(buf));
-	memset(password, 0, sizeof(password));
-	memset(username, 0, sizeof(username));
+	memset(password, 0, MAX_STRING_LEN);
+	memset(username, 0, MAX_STRING_LEN);
 	memset(realm, 0, sizeof(username));
-	memset(secret, 0, sizeof(secret));
+	memset(secret, 0, strlen(secret));
 
 	return EXIT_SUCCESS;
 }
 
 
-void
-usage(void)
-{
+void usage(void) {
 	printf("Usage: %s [OPTIONS]... [FILE] REALM USERNAME\n", getprogname());
 	printf("\n\
 Options:\n\n\
@@ -222,9 +206,7 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 	exit(EXIT_SUCCESS);
 }
 
-void
-version(void)
-{
+void version(void) {
 	printf("%s - %s %s %s\n", getprogname(), PACKAGE_NAME, VERSION_LONG, OPENSSL_VERSION);
 	printf("\
 Copyright 2008, 2009, 2010, 2011, 2012 David Winter. All rights reserved.\n\

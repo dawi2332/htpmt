@@ -1,0 +1,5 @@
+htpasswd
+htdigest
+version.h
+version-openssl.h
+version-openssl.h.tmp

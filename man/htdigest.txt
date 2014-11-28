@@ -44,7 +44,7 @@ OPTIONS
    Prints htdigest version information.
 
 *--help*::
-   Prints usage information. 
+   Prints usage information.
 
 EXAMPLES
 --------
@@ -70,3 +70,4 @@ SEE ALSO
 
 htpasswd(1)
 
+// vim: ft=asciidoc

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008, 2009, 2010, 2011, 2012 David Winter
+ * Copyright 2008-2014 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -263,7 +263,7 @@ Report bugs at http://code.google.com/p/htpmt/\n");
 void version(void) {
 	printf("%s - %s %s %s\n", getprogname(), PACKAGE_NAME, VERSION_LONG, OPENSSL_VERSION);
 	printf("\
-Copyright 2008, 2009, 2010, 2011, 2012 David Winter. All rights reserved.\n\
+Copyright 2008-2014 David Winter. All rights reserved.\n\
 This is open source software, see the source for copying conditions.\n");
 	exit(EXIT_SUCCESS);
 }

@@ -30,16 +30,8 @@
 
 /*
  * version.c:
- * combines svnversion and 'svn info' into a compact representation
- * of working copy revision and repository path so almost every
- * possible version of htpmt can be reconstructed from --version.
- *
- * Examples:
- *
- * Official Releases -- 1.0 (releases/1.0@r36)
- * Release Branches  -- releases/1.0@r35
- * Other Branches    -- branches/my-branch@r103
- * Trunk             -- r73M
+ * Uses `git describe' to generate a version number from git
+ * tags or branches.
  *
  */
 
@@ -55,90 +47,38 @@ int eq(char *a, char *b)
 	return strcmp(a, b) == 0;
 }
 
-void usage()
-{
-	fprintf(stderr, "Usage: version WCPATH\n");
-	exit(1);
-}
-
 int main(int argc, char *argv[])
 {
 	FILE *pipe;
-	char cmd[1024];
 	char version[1024];
-	char buf[1024];
-	char url[1024];
+	char complete_info[1024];
 	char *ptr, *path1, *path2, *path3;
 
-	if (argc != 2)
-	{
-		usage();
-	}
-	sprintf(cmd, "svnversion -n %s", argv[1]);
-
-	pipe = popen(cmd, "r");
+	pipe = popen("git describe --always --tags", "r");
 	fscanf(pipe, "%s", version);
 	pclose(pipe);
 
-	sprintf(cmd, "svn info %s 2>/dev/null", argv[1]);
-	pipe = popen(cmd, "r");
-
-	while (fgets(buf, sizeof(buf), pipe) != NULL)
-	{
-		ptr = strtok(buf, ": ");
-
-		if (ptr != NULL && eq(ptr, "URL"))
-		{
-			ptr = strtok(NULL, " ");
-			strcpy(url, ptr);
-			ptr = strrchr(url, '\n');
-			*ptr = '\0';
-		}
-	}
-
+	pipe = popen("git describe --always --all --long --dirty", "r");
+	fscanf(pipe, "%s", complete_info);
 	pclose(pipe);
 
-	if (!eq(version, "exported"))
-	{
-		printf("#define SVN_VERSION \"%s\"\n", version);
-		printf("#define SVN_URL \"%s\"\n", url);
+	printf("#define GIT_VERSION \"%s\"\n", complete_info);
+	printf("#define REVISION \"%s\"\n", version);
 
-		path1 = strrchr(url, '/');
-		*path1 = '\0';
-		path1++;
-		path2 = strrchr(url, '/');
-		*path2 = '\0';
-		path2++;
-		path3 = strrchr(url, '/');
-		*path3 = '\0';
-		path3++;
+	char *wrk = strdup(complete_info);
 
-		printf("#define VERSION_LONG \"");
-
-		if (eq(path1, "trunk"))
-		{
-			printf("r%s\"\n", version);
-			printf("#define REVISION \"r%s\"\n", version);
-		}
-		else if(eq(path3, "branches") && eq(path2, "releases"))
-		{
-			printf("releases/%s@r%s\"\n", path1, version);
-			printf("#define REVISION \"releases/%s@r%s\"\n", path1, version);
-		}
-		else if(eq(path3, "branches") && eq(path2, "features"))
-		{
-			printf("branches/%s@r%s\"\n", path1, version);
-			printf("#define REVISION \"branches/%s@r%s\"\n", path1, version);
-		}
-		else if(eq(path3, "tags") && eq(path2, "releases"))
-		{
-			printf("%s\"\n", VERSION);
-			printf("#define REVISION \"releases/%s@r%s\"\n", path1, version);
-		}
+	path1 = strsep(&wrk, "/");
+	path2 = strsep(&wrk, "/");
+	if (path2 != NULL) {
+		path3 = strsep(&wrk, "/");
 	}
-	else
-	{
-		errx(1, "could not determine svn revision, '%s' is not under version control", argv[1]);
+
+	printf("#define VERSION_LONG \"");
+
+	if (eq(path1, "tags")) {
+		printf("%s (%s)\"\n", version, complete_info);
+	} else {
+		printf("%s-g%s (%s)\"\n", VERSION, version, complete_info);
 	}
 	return 0;
 }

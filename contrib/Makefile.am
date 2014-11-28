@@ -1,2 +1,2 @@
-EXTRA_DIST = gprof2dot gprof2dot.py gnuify-changelog
+EXTRA_DIST = gprof2dot gprof2dot.py
 MAINTAINERCLEANFILES = Makefile.in

@@ -26,9 +26,6 @@
  *
  */
 
-/* $Id$ */
-
-
 #ifndef _READPASSWD_H
 #define _READPASSWD_H
 

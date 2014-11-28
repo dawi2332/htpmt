@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #include "system.h"
 
 #ifndef TMPFILE_TEMPLATE

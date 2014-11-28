@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #include <system.h>
 
 #if HAVE_LIBCRYPTO

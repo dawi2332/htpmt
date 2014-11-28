@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #include <fcntl.h>
 #include "fileio.h"
 #include "tempfile.h"

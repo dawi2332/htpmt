@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 /*
  * version.c:
  * Uses `git describe' to generate a version number from git

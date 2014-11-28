@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #include "system.h"
 #include "version.h"
 #include "version-openssl.h"

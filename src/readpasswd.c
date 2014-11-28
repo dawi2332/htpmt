@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #include "system.h"
 #include "readpasswd.h"
 #ifdef HAVE_SIGNAL_H

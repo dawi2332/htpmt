@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #ifndef _TEMPFILE_H
 #define _TEMPFILE_H
 

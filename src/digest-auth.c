@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #include "system.h"
 #include "md5.h"
 

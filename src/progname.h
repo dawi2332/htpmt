@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #ifndef _PROGNAME_H
 #define _PROGNAME_H
 

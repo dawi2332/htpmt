@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #include "system.h"
 
 const char *program_name;

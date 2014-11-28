@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #ifndef _BASIC_AUTH_H
 #define _BASIC_AUTH_H
 

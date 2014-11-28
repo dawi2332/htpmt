@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #ifndef _CRYPT_APR_H
 #define _CRYPT_APR_H
 

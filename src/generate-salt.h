@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #ifndef _GENERATE_SALT_H
 #define _GENERATE_SALT_H
 

@@ -26,8 +26,6 @@
  *
  */
 
-/* $Id$ */
-
 #ifndef _DIGEST_AUTH_H
 #define _DIGEST_AUTH_H
 

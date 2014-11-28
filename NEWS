@@ -1,2 +1,33 @@
-Version 1.0
- * Initial Release
+Version 1.3
+ * Minor, mainly cosmetic, changes.
+
+Version 1.2
+ * Added support for using OpenSSL instead of the built-in libmd
+ for Message Digests. This is an optional feature and will only be
+ enabled when 'configure' is called with the flag '--with-openssl'.
+ * When called with '--version', htpasswd and htdigest will report
+ the version of OpenSSL they were built against.
+ * libmd and the libmd testsuite will only be built (and run in the
+ latter case), if OpenSSL support was not requested.
+
+Version 1.1
+ * Improved compatibility: the length of user records created or
+ modified is now restricted to 255 bytes, as Apache htdigest and
+ htpasswd (and possibly httpd) don't handle longer records.
+ * getpass() functionality, reading from stdin and tty
+ detection were moved into a new function: readpasswd.
+ * Most custom functions for printing formatted error messages have
+ been removed in favor of standard C library functions.
+ * Test suites are now based on FCTX instead of autotest and plain
+ C.
+ * Documentation files and man pages have been updated.
+ * Bug-fixes:
+   - The dist-hook has been improved and no longer breaks 'make dist'
+   - username, password and realm input validation has been fixed.
+   - htpasswd will ignore user records created with htdigest and
+   vice versa in order to prevent data loss.
+   - When updating or deleting a user record only the first record
+   matching username and realm (if present) will be modified,
+   preventing accidental overwriting or deletion of user records.
+   - Fixed a possible segmentation fault occurring when using '-b'
+   and '-n' at the same time.

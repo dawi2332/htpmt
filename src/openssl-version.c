@@ -26,44 +26,39 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <stdio.h>
+#include "system.h"
 
 #if defined(HAVE_LIBCRYPTO)
 #include <openssl/opensslv.h>
-#endif
 
-void
-print_openssl_version(unsigned long version_number)
-{
-	unsigned int major = version_number >> 28 & 0xf;
-	unsigned int minor = version_number >> 20 & 0xff;
-	unsigned int micro = version_number >> 12 & 0xff;
-	unsigned int patch = version_number >> 4 & 0xff;
-	unsigned int status = version_number & 0xf;
+static char *openssl_version_string = NULL;
+
+char *get_openssl_version() {
+	if (openssl_version_string != NULL) {
+		return openssl_version_string;
+	}
+
+	char buf[1024];
+	unsigned int major = OPENSSL_VERSION_NUMBER >> 28 & 0xf;
+	unsigned int minor = OPENSSL_VERSION_NUMBER >> 20 & 0xff;
+	unsigned int micro = OPENSSL_VERSION_NUMBER >> 12 & 0xff;
+	unsigned int patch = OPENSSL_VERSION_NUMBER >> 4 & 0xff;
+	unsigned int status = OPENSSL_VERSION_NUMBER & 0xf;
 
 	patch = (patch > 0 ? patch + 0x60 : 0);
 
-	printf("openssl-%i.%i.%i%c", major, minor, micro, patch);
+	snprintf(buf, 1024, "openssl-%i.%i.%i%c", major, minor, micro, patch);
 	if (status == 0)
 	{
-		printf("-dev");
+		strncat(buf, "-dev", 4);
 	}
 	if (status > 0 && status < 0xf)
 	{
-		printf("-beta%i", status);
+		char *tmp = buf + strlen(buf);
+		snprintf(tmp, 6, "-beta%i", status);
 	}
-}
 
-int
-main(int arc, char *argv[])
-{
-	printf("#define OPENSSL_VERSION \"");
-#ifdef OPENSSL_VERSION_NUMBER
-	print_openssl_version(OPENSSL_VERSION_NUMBER);
-#endif
-	puts("\"");
+	openssl_version_string = strdup(buf);
+	return openssl_version_string;
 }
+#endif

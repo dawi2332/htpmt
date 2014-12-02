@@ -27,7 +27,7 @@
  */
 
 #include "system.h"
-#include "version-openssl.h"
+#include "openssl-version.h"
 #include "basic-auth.h"
 #include "fileio.h"
 #include "readpasswd.h"

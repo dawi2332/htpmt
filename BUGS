@@ -1,0 +1,8 @@
+Known Bugs
+==========
+
+OpenSSL deprecation warinings
+-----------------------------
+The OpenSSL functions used for MD5 and SHA-1 message digest are
+deprecated and depedending on your system there may be compiler
+warnings. The tools should work fine non the less.

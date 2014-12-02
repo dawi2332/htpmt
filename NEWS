@@ -1,5 +1,7 @@
 Version 1.3
- * ...
+ * Updated copyright notices and reformatted C files.
+ * Switched from svn to git, removed svn-specific tools and reworked
+ how the version is generated from VCS information.
 
 Version 1.2
  * Added support for using OpenSSL instead of the built-in libmd

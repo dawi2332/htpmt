@@ -27,7 +27,6 @@
  */
 
 #include "system.h"
-#include "version.h"
 #include "version-openssl.h"
 #include "basic-auth.h"
 #include "fileio.h"

@@ -1,8 +1,8 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.61)
-AC_INIT([htpmt], [1.0], [http://code.google.com/p/htpmt/issues/entry], [htpmt], [http://code.google.com/p/htpmt/])
+AC_PREREQ([2.69])
+AC_INIT([htpmt],[1.0],[http://code.google.com/p/htpmt/issues/entry],[htpmt],[http://code.google.com/p/htpmt/])
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([gnits color-tests -Wall -Werror])
 AC_CONFIG_SRCDIR([src])
@@ -66,5 +66,8 @@ AM_CONDITIONAL([ENABLE_LIBMD], [test "x$with_builtin_libmd" != xno])
 
 AC_CONFIG_FILES([Makefile build-aux/Makefile src/Makefile contrib/Makefile man/Makefile doc/Makefile libmd/Makefile tests/Makefile])
 
+AC_DEFINE_UNQUOTED([VERSION_LONG],
+                   [m4_esyscmd([./build-aux/version])],
+                   [Long format of the version string])
 
 AC_OUTPUT

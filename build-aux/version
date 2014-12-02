@@ -1,0 +1,21 @@
+#! /bin/sh
+
+if [[ ! -d .git ]]
+then
+    echo "Source not under version control." >&2
+    exit 64
+fi
+
+GIT_TAG_OR_COMMIT=`git describe --always --tags`
+GIT_DETAILED_INFO=`git describe --always --all --long --dirty`
+
+REFTYPE=`echo $GIT_DETAILED_INFO | awk -F"\/" '{ print $1 }'`
+
+if [[ x$REFTYPE == x"tags" ]]
+then
+    printf "\"%s (%s)\"" $GIT_TAG_OR_COMMIT $GIT_DETAILED_INFO
+else
+    printf "\"%s-g%s (%s)\"" snapshot $GIT_TAG_OR_COMMIT $GIT_DETAILED_INFO
+fi
+
+# vim: ft=sh

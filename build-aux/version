@@ -11,7 +11,7 @@ GIT_DETAILED_INFO=`git describe --always --all --long --dirty`
 
 REFTYPE=`echo $GIT_DETAILED_INFO | awk -F"\/" '{ print $1 }'`
 
-if [[ x$REFTYPE == x"tags" ]]
+if [[ x$REFTYPE == x"tags" ]] || [[ x$REFTYPE != x"heads" ]]
 then
     printf "\"%s (%s)\"" $GIT_TAG_OR_COMMIT $GIT_DETAILED_INFO
 else

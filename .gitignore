@@ -11,3 +11,4 @@ aclocal.m4
 stamp-h1
 *.o
 *.a
+tags

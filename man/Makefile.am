@@ -5,11 +5,9 @@ CLEANFILES = htpasswd.xml htdigest.xml
 
 man1_MANS = htpasswd.1 htdigest.1
 
-# if one of those fails because xsltproc can't load the XSL stylesheet
-# check whether the docbook-xsl package is installed and XML_CATALOG_FILES is
-# is set and points to a valid catalog file
-htpasswd.1: htpasswd.txt
-	a2x -L --xsltproc-opts="--novalid" -f manpage -d manpage $<
+SUFFIXES = .1 .txt
 
-htdigest.1: htdigest.txt
-	a2x -L --xsltproc-opts="--novalid" -f manpage -d manpage $<
+# This target will take quite some time or may even fail if
+# the DocBook XSL stylesheets are not installed (properly).
+.txt.1:
+	a2x -f manpage -d manpage $<

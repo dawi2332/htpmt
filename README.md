@@ -49,7 +49,7 @@ In addition to the above, building the trunk or a development branch may require
 # Building
 If you want to build a development version, you need to generate configure and the Makefiles from their respective sources:
 ```
-autoreconf
+./autogen.sh
 ```
 If not, you can skip directly to building and installing htpmt.
 ```

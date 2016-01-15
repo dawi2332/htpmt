@@ -99,7 +99,7 @@ char * generate_salt(size_t length) {
 	}
 
 
-	if (0 < length < 32)
+	if (length > 0 && length < 32)
 		salt[length+1] = '\0';
 	else
 		salt[32] = '\0';

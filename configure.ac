@@ -4,7 +4,7 @@
 AC_PREREQ([2.69])
 AC_INIT([htpmt],[1.0],[http://code.google.com/p/htpmt/issues/entry],[htpmt],[http://code.google.com/p/htpmt/])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([gnits color-tests -Wall -Werror])
+AM_INIT_AUTOMAKE([gnits foreign color-tests -Wall -Werror])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADER([config.h])
 

@@ -26,7 +26,7 @@
  *
  */
 
-#include <system.h>
+#include "system.h"
 
 #ifdef HAVE_LIBCRYPTO
 #include <openssl/sha.h>

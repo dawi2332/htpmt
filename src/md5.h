@@ -26,7 +26,7 @@
  *
  */
 
-#include <system.h>
+#include "system.h"
 
 #if HAVE_LIBCRYPTO
 #include <openssl/md5.h>

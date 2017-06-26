@@ -8,7 +8,14 @@ config.status
 configure
 aclocal.m4
 .deps
+.dirstamp
 stamp-h1
 *.o
 *.a
 tags
+.tags*
+htpasswd
+htdigest
+version.h
+version-openssl.h
+version-openssl.h.tmp

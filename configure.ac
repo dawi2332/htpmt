@@ -4,7 +4,7 @@
 AC_PREREQ([2.69])
 AC_INIT([htpmt],[1.0],[http://code.google.com/p/htpmt/issues/entry],[htpmt],[http://code.google.com/p/htpmt/])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([gnits foreign color-tests -Wall -Werror])
+AM_INIT_AUTOMAKE([subdir-objects gnits foreign color-tests -Wall -Werror])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADER([config.h])
 
@@ -57,14 +57,14 @@ AS_IF([test "x$with_openssl" != xno],
 
 LIBMD=
 AS_IF([test "x$with_builtin_libmd" != xno],
-      [AC_SUBST([LIBMD], ["\$(top_builddir)/libmd/libmd.a"])
+      [AC_SUBST([LIBMD], ["\$(top_builddir)/libmd.a"])
       AC_DEFINE([HAVE_LIBMD], [1],
 		[Define if you have libmd])
       AC_MSG_NOTICE([Using libmd (built-in) for cryptographic hash functions])])
 
 AM_CONDITIONAL([ENABLE_LIBMD], [test "x$with_builtin_libmd" != xno])
 
-AC_CONFIG_FILES([Makefile build-aux/Makefile src/Makefile contrib/Makefile man/Makefile doc/Makefile libmd/Makefile tests/Makefile])
+AC_CONFIG_FILES([Makefile])
 
 AC_DEFINE_UNQUOTED([VERSION_LONG],
                    [m4_esyscmd([./build-aux/version])],

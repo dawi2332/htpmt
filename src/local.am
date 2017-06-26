@@ -1,0 +1,36 @@
+bin_PROGRAMS = htpasswd htdigest
+noinst_LIBRARIES += libhtcore.a
+
+libhtcore_a_SOURCES  = src/system.h \
+		       src/syntax.c \
+		       src/syntax.h \
+		       src/progname.h \
+		       src/progname.c \
+		       src/basic-auth.h \
+		       src/basic-auth.c \
+		       src/fileio.h \
+		       src/fileio.c \
+		       src/tempfile.h \
+		       src/tempfile.c \
+		       src/digest-auth.h \
+		       src/digest-auth.c \
+		       src/crypt-apr1.c \
+		       src/crypt-apr1.h \
+		       src/generate-salt.c \
+		       src/generate-salt.h \
+		       src/readpasswd.c \
+		       src/readpasswd.h \
+		       src/sha.h \
+		       src/md5.h \
+		       src/openssl-version.h
+
+if !ENABLE_LIBMD
+libhtcore_a_SOURCES += src/openssl-version.c
+endif
+
+htpasswd_SOURCES = src/htpasswd.c
+htdigest_SOURCES = src/htdigest.c
+
+LDADD += libhtcore.a $(LIBMD) $(LIBCRYPTO)
+
+# vim:ft=Automake

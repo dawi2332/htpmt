@@ -12,4 +12,4 @@ SUFFIXES = .1 .txt
 	$(AM_V_GEN)$(MKDIR_P) $(@D)
 	a2x -f manpage -d manpage $<
 
-# vim:ft=Automake
+# vim:ft=automake

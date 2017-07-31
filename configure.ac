@@ -20,7 +20,7 @@ AC_SEARCH_LIBS([crypt], [crypt])
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([fcntl.h float.h inttypes.h memory.h stddef.h stdint.h stdlib.h string.h strings.h termios.h unistd.h getopt.h err.h signal.h])
+AC_CHECK_HEADERS([fcntl.h float.h inttypes.h memory.h stddef.h stdint.h stdlib.h stdbool.h string.h strings.h termios.h unistd.h getopt.h err.h signal.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

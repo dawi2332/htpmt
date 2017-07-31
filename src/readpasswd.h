@@ -29,7 +29,6 @@
 #ifndef _READPASSWD_H
 #define _READPASSWD_H
 
-#define F_NOECHO 0x1
-char *readpasswd(const char *, char *, size_t, int);
+char *readpasswd(const char *, char *, size_t, bool);
 
 #endif

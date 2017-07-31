@@ -27,86 +27,81 @@
  */
 
 #include "system.h"
-#include "readpasswd.h"
 #ifdef HAVE_SIGNAL_H
-#include	<signal.h>
+#include <signal.h>
 #endif /* HAVE_SIGNAL_H */
 #ifdef HAVE_TERMIOS_H
-#include	<termios.h>
+#include <termios.h>
 #endif /* HAVE_TERMIOS_H */
+#include "readpasswd.h"
 
-struct termios	oattr;
-sigset_t	oset;
+struct termios oattr;
 
 /*
  * reset_terminal -- resets interrupts and terminal attributes to whatever
  *                   it was before calling setup_terminal
  */
 void reset_terminal() {
-	if (!isatty(STDIN_FILENO))
-		return;
+  if (!isatty(STDIN_FILENO)) return;
 
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &oattr);
-	sigprocmask(SIG_SETMASK, &oset, NULL);
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, &oattr);
 }
 
 /*
  * setup_terminal -- masks interrupts and changes terminal attributes
  */
-void setup_terminal(int flags) {
-	struct termios	attr;
-	sigset_t	set;
+void setup_terminal() {
+  struct termios attr;
+  sigset_t set;
 
-	if (!isatty(STDIN_FILENO) || !(flags & F_NOECHO))
-		return;
+  if (!isatty(STDIN_FILENO)) return;
 
-	sigemptyset(&set);
-	sigaddset(&set, SIGINT);
-	sigaddset(&set, SIGTSTP);
-	sigprocmask(SIG_BLOCK, &set, &oset);
-
-	tcgetattr(STDIN_FILENO, &attr);
-	tcgetattr(STDIN_FILENO, &oattr);
-	attr.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL | ICANON);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &attr);
-	atexit(reset_terminal);
+  tcgetattr(STDIN_FILENO, &attr);
+  tcgetattr(STDIN_FILENO, &oattr);
+  attr.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL | ICANON);
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, &attr);
+  atexit(reset_terminal);
 }
 
 /*
  * readpasswd -- reads bufsize-1 chars from stdin or tty
  */
-char * readpasswd(const char *prompt, char *buffer, size_t bufsize, int flags) {
-	size_t		len;
-	char		*ptr;
-	char		c;
-	int		has_prompt;
+char *readpasswd(const char *prompt, char *buffer, size_t bufsize, bool echo) {
+  char c;
+  int has_prompt;
+  int has_extras = 0;
 
-	has_prompt = ((prompt != NULL) && (strlen(prompt) > 0) ? 1 : 0);
-	memset(buffer, 0, bufsize);
+  has_prompt = ((prompt != NULL) && (strlen(prompt) > 0) ? 1 : 0);
+  memset(buffer, 0, bufsize);
 
-	setup_terminal(flags);
+  if (!echo) setup_terminal();
 
+  if (has_prompt) {
+	fputs(prompt, stdout);
+	fflush(stdout);
+  }
 
-	if (has_prompt)
-		fputs(prompt, stdout);
+  if (fgets(buffer, bufsize, stdin) == NULL && ferror(stdin)) {
+	err(EXIT_FAILURE, NULL);
+  }
 
-	len = 0;
-	while (((c = getchar()) != EOF) && (c != '\n')) {
-		buffer[len] = c;
-
-		if (++len >= bufsize) {
-			break;
-		}
+  if (buffer[strlen(buffer) - 1] == '\n') {
+	buffer[strlen(buffer) - 1] = '\0';
+  } else {
+	if (((c = getchar()) != '\n') && (c != EOF)) {
+	  has_extras = 1;
 	}
-	buffer[len] = '\0';
+  }
 
-	if (has_prompt)
-		putchar('\n');
+  if (has_prompt) {
+	putchar('\n');
+  }
 
-	reset_terminal();
+  if (!echo) reset_terminal();
 
-	if (len >= bufsize)
-		errx(EXIT_OVERFLOW, "the password must not contain more than %u characters", (unsigned int) bufsize-1);
+  if (has_extras) {
+	errx(EXIT_OVERFLOW, "the password must not contain more than %zu characters", bufsize - 1);
+  }
 
-	return buffer;
+  return buffer;
 }

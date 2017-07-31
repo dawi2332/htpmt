@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 David Winter
+ * Copyright 2008-2017 David Winter
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,23 +34,26 @@
 #include "syntax.h"
 #include "system.h"
 
-#include <stdbool.h>
-
 void usage(void);
 void version(void);
 
-typedef enum { CRYPT, PLAIN, SHA1, APR1 } algo_e;
+typedef enum { CRYPT, PLAIN, SHA1, APR1 } algo_enum;
 
 typedef enum {
   HELP_OPTION,
   VERSION_OPTION,
   NO_WARNINGS_OPTION,
   NO_VERIFY_OPTION
-} option_e;
+} option_enum;
 
-typedef enum { CREATE_MODE, UPDATE_MODE, DELETE_MODE, STDOUT_MODE } mode_e;
+typedef enum { CREATE_MODE, UPDATE_MODE, DELETE_MODE, STDOUT_MODE } mode_enum;
 
-typedef enum { STDIN_INPUT, ARGS_INPUT, TTY_INPUT } input_e;
+typedef enum { STDIN_INPUT, ARGS_INPUT, TTY_INPUT } input_enum;
+
+void sigint_handler(int sig) {
+  putchar('\n');
+  errx(EXIT_INTERRUPT, "Interrupted");
+}
 
 int main(int argc, char *argv[]) {
   char *secret = NULL;
@@ -65,9 +68,9 @@ int main(int argc, char *argv[]) {
   bool verbose = false;
   bool warn = true;
   bool verify = true;
-  mode_e mode = UPDATE_MODE;
-  algo_e force_algo = APR1;
-  input_e input = TTY_INPUT;
+  mode_enum mode = UPDATE_MODE;
+  algo_enum force_algo = APR1;
+  input_enum input = TTY_INPUT;
 
   const struct option options[] = {
       {"create", no_argument, NULL, 'c'},
@@ -86,6 +89,8 @@ int main(int argc, char *argv[]) {
       {NULL, 0, NULL, 0}};
 
   setprogname(argv[0]);
+
+  signal(SIGINT, sigint_handler);
 
   while ((c = getopt_long(argc, argv, "cnmdpsbDi", options, NULL)) != -1) {
     switch (c) {
@@ -130,8 +135,10 @@ int main(int argc, char *argv[]) {
         break;
       case NO_VERIFY_OPTION:
         verify = false;
+        break;
       default:
         usage();
+        break;
     }
   }
 
@@ -181,18 +188,18 @@ int main(int argc, char *argv[]) {
 
   switch (input) {
     case TTY_INPUT:
-      password = readpasswd("Password:", buf, MAX_STRING_LEN, F_NOECHO);
+      password = readpasswd("Password:", buf, MAX_STRING_LEN, false);
       if (verify) {
-        password =
-            readpasswd("Verify password:", buf1, MAX_STRING_LEN, F_NOECHO);
+        password = readpasswd("Verify password:", buf1, MAX_STRING_LEN, false);
         if (strncmp(buf, buf1, MAX_STRING_LEN) != 0) {
           memset(buf, 0, MAX_STRING_LEN);
+          memset(buf1, 0, MAX_STRING_LEN);
           errx(EXIT_VERIFICATION, "password mismatch");
         }
       }
       break;
     case STDIN_INPUT:
-      password = readpasswd("", buf, MAX_STRING_LEN, 0);
+      password = readpasswd("", buf, MAX_STRING_LEN, true);
       break;
     case ARGS_INPUT:
       if (warn) {
@@ -257,6 +264,7 @@ int main(int argc, char *argv[]) {
   /* zero everything */
   memset(password, 0, MAX_STRING_LEN);
   memset(buf, 0, sizeof(buf));
+  memset(buf1, 0, sizeof(buf1));
   memset(username, 0, MAX_STRING_LEN);
   memset(secret, 0, strlen(secret));
 
@@ -291,7 +299,7 @@ void version(void) {
   printf("%s - %s %s %s\n", getprogname(), PACKAGE_NAME, VERSION_LONG,
          OPENSSL_VERSION);
   printf(
-      "Copyright 2008-2014 David Winter. All rights reserved.\n"
+      "Copyright 2008-2017 David Winter. All rights reserved.\n"
       "This is open source software, see the source for copying conditions.\n");
   exit(EXIT_SUCCESS);
 }
